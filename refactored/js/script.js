@@ -1,8 +1,14 @@
 "use strict";
 
 (function() {
-	const url = "http://api.openweathermap.org/data/2.5/weather?q=";
-	const apiKey = "APIKEY"; // Replace "APIKEY" with your own API key; otherwise, your HTTP request will not work
+	const apiUrl = env.API_URL;
+	const apiKey = env.API_KEY;
+	const apiAuthParameter = 'appid=';
+	const apiCityParameter = 'q=';
+	const apiDataCollection = 'weather';
+	const apiAuthorization = `${apiAuthParameter}${apiKey}`;
+	const serviceImgCollection = 'img/w/';
+
 	const activities = {
 		teamIn: ['basketball','hockey','volleyball'],
 		teamOutWarm: ['softball/baseball','football/soccer','American football','rowing','tennis','volleyball','ultimate frisbee','rugby'],
@@ -14,17 +20,30 @@
 	let state = {};
 	let category = 'all';
 
+	function getSearchUrl(location) {
+		const cityQuery = `${apiCityParameter}${location}`;
+		const searchUrl = `${apiUrl}${apiDataCollection}?${cityQuery}&${apiAuthorization}`;
+		return searchUrl;
+	}
+
+	function getIconUrl(icon) {
+		const iconUrl = `${env.SERVICE_URL}${serviceImgCollection}${icon}.png`;
+		return iconUrl;
+	}
+
 	// get weather data when user clicks Forecast button, then add temp & conditions to view
 	$('.forecast-button').click(function(e) {
 		e.preventDefault();
 		const location = $('#location').val();
-		$('#location').val('');
+		const searchUrl = getSearchUrl(location);
 
-		$.get(url + location + '&appid=' + apiKey).done(function(response) {
+		$.get(searchUrl).done(function(response) {
 			updateUISuccess(response);
 		}).fail(function() {
 			updateUIFailure();
 		});
+
+		$('#location').val('');
 	});
 
 	// update list of sports when user selects a different category (solo/team/all)
@@ -38,7 +57,7 @@
 		const degFInt = Math.floor(degF);
 		state = {
 			condition: response.weather[0].main,
-			icon: "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png",
+			icon: getIconUrl(response.weather[0].icon),
 			degCInt: Math.floor(degCInt),
 			degFInt: Math.floor(degFInt),
 			city: response.name
