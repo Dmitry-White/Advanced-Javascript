@@ -10,7 +10,7 @@
 	const apiAuthorization = `${apiAuthParameter}${apiKey}`;
 	const serviceImgCollection = 'img/w/';
 
-	const activities = {
+	const ACTIVITIES = {
 		teamIn: ['basketball','hockey','volleyball'],
 		teamOutWarm: ['softball/baseball','football/soccer','American football','rowing','tennis','volleyball','ultimate frisbee','rugby'],
 		teamOutCold: ['hockey'],
@@ -18,8 +18,27 @@
 		soloOutWarm: ['rowing','running','hiking','cycling','rock climbing'],
 		soloOutCold: ['snowshoeing','downhill skiing','cross-country skiing','ice skating']
 	}
+	const CONDITIONS = {
+		RAIN: 'Rain',
+		SNOW: 'Snow',
+	};
+	const PLACE_TYPES = {
+		INSIDE: 'In',
+		OUTSIDE: {
+			COLD: 'OutCold',
+			WARM: 'OutWarm'
+		}
+	};
+	const CATEGORIES = {
+		ALL: 'all',
+		SOLO: 'solo',
+		TEAM: 'team',
+	};
+
+	const SLIDE_SPEED = 300;
+
 	let state = {};
-	let category = 'all';
+	let currentCategory = CATEGORIES.ALL;
 
 	function getSearchUrl(location) {
 		const cityQuery = `${apiCityParameter}${location}`;
@@ -32,22 +51,29 @@
 		return iconUrl;
 	}
 
-	// get weather data when user clicks Forecast button, then add temp & conditions to view
-	$('.forecast-button').click(function(e) {
+	function getCelcius(tempKelvin) {
+		return tempKelvin - 273.15;
+	}
+
+	function getFahrenheit(tempKelvin) {
+		return getCelcius(tempKelvin) * 1.8 + 32;
+	}
+
+	// get weather data when user clicks Forecast button, then add temp & CONDITIONS to view
+	$('.forecast-button').click(e => {
 		e.preventDefault();
 		const location = $('#location').val();
 		const searchUrl = getSearchUrl(location);
 
-		$.get(searchUrl).done(function(response) {
-			updateUISuccess(response);
-		}).fail(function() {
-			updateUIFailure();
-		});
+		fetch(searchUrl)
+			.then(res => res.json())
+			.then(response => updateUISuccess(response))
+			.catch(() => updateUIFailure());
 
 		$('#location').val('');
 	});
 
-	// update list of sports when user selects a different category (solo/team/all)
+	// update list of sports when user selects a different currentCategory (solo/team/all)
 	$('.options div').on('click', updateActivityList);
 
 	// handle ajax success
@@ -55,16 +81,14 @@
 		const { main: { temp }, weather, name } = response;
 		const { main, icon } = weather[0];
 
-		const degC = temp - 273.15;
-		const degCInt = Math.floor(degC);
-		const degF = degC * 1.8 + 32;
-		const degFInt = Math.floor(degF);
+		const tempCelcius = getCelcius(temp);
+		const tempFahrenheit = getFahrenheit(temp);
 
 		state = {
 			condition: main,
 			icon: getIconUrl(icon),
-			degCInt: Math.floor(degCInt),
-			degFInt: Math.floor(degFInt),
+			celcius: Math.floor(tempCelcius),
+			fahrenheit: Math.floor(tempFahrenheit),
 			city: name,
 		};
 
@@ -73,11 +97,11 @@
 		ReactDOM.render(<Forecast {...state} />, $into);
 
 		function Forecast(props) {
-			const { city, degCInt, degFInt, icon, condition } = props;
+			const { city, celcius, fahrenheit, icon, condition } = props;
 			return (
 				<div>
 					<p className="city">{city}</p>
-					<p>{degCInt}&#176; C / {degFInt}&#176; F <img src={icon} alt={condition} /></p>
+					<p>{celcius}&#176; C / {fahrenheit}&#176; F <img src={icon} alt={condition} /></p>
 				</div>
 			)
 		}
@@ -85,9 +109,9 @@
 		updateActivityList();
 	}
 
-	// handle selection of a new category (team/solo/all) 
+	// handle selection of a new currentCategory (team/solo/all) 
 	function updateActivityList(event) {
-		const { condition, degFInt } = state;
+		const { condition, fahrenheit } = state;
 		state.activities = [];
 
 		if (event !== undefined && $(this).hasClass('selected')) {
@@ -100,27 +124,27 @@
 			// if the 'event' parameter is defined, then a tab has been clicked
 			// if the clicked tab does not have the class 'selected', then location of 'selected' class must be added
 			//   to the clicked element and removed from its siblings
-			category = $(this).attr('id');
+			currentCategory = $(this).attr('id');
 			$('.options div').removeClass('selected');
 			$(this).addClass('selected');
 		} 
 
-		if (condition === "Rain") {
-			updateState('In');
-		} else if (condition === "Snow" || degFInt < 50) {
-			updateState('OutCold');
+		if (condition === CONDITIONS.RAIN) {
+			updateState(PLACE_TYPES.INSIDE);
+		} else if (condition === CONDITIONS.SNOW || fahrenheit < 50) {
+			updateState(PLACE_TYPES.OUTSIDE.COLD);
 		} else {
-			updateState('OutWarm');
+			updateState(PLACE_TYPES.OUTSIDE.WARM);
 		}
 
 		function updateState(type) {
-			if (category === "solo") {
-				state.activities.push(...activities['solo' + type]);
-			} else if (category === "team") {
-				state.activities.push(...activities['team' + type]);
+			if (currentCategory === CATEGORIES.SOLO) {
+				state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+			} else if (currentCategory === CATEGORIES.TEAM) {
+				state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
 			} else {
-				state.activities.push(...activities['solo' + type]);
-				state.activities.push(...activities['team' + type]);
+				state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+				state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
 			}
 		}
 
@@ -131,7 +155,7 @@
 		function Activities(props) {
 			const { activities } = props;
 
-			const activitiesList = activities.map(function(activity, index) {
+			const activitiesList = activities.map((activity, index) => {
 				return <li key={index}>{activity}</li>
 			});
 			return (
@@ -141,7 +165,7 @@
 			)
 		}
 
-		$('.results').slideDown(300);
+		$('.results').slideDown(SLIDE_SPEED);
 	}
 
 	// handle ajax failure
