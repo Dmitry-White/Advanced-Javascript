@@ -230,7 +230,14 @@ em {
 }
 
 .nav .nav-elements .forecast .results {
-    display: none;
+    height: auto;
+    max-height: 0;
+    overflow-y: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.nav .nav-elements .forecast .open {
+    max-height: 350px;
     border: 1px solid white;
     border-top: none;
 }

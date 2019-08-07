@@ -40,6 +40,13 @@
 	let state = {};
 	let currentCategory = CATEGORIES.ALL;
 
+	const optionsBlock = document.querySelectorAll('.options div');
+	const activitiesBlock = document.querySelector('.activities');
+	const conditionsBlock = document.querySelector('.conditions');
+	const locationBlock = document.querySelector('#location');
+	const forecastButton = document.querySelector('.forecast-button');
+	const resultsBlock = document.querySelector('.results');
+
 	function getSearchUrl(location) {
 		const cityQuery = `${apiCityParameter}${location}`;
 		const searchUrl = `${apiUrl}${apiDataCollection}?${cityQuery}&${apiAuthorization}`;
@@ -59,10 +66,9 @@
 		return getCelcius(tempKelvin) * 1.8 + 32;
 	}
 
-	// get weather data when user clicks Forecast button, then add temp & CONDITIONS to view
-	$('.forecast-button').click(e => {
+	forecastButton.addEventListener('click', e => {
 		e.preventDefault();
-		const location = $('#location').val();
+		const location = locationBlock.value;
 		const searchUrl = getSearchUrl(location);
 
 		fetch(searchUrl)
@@ -70,11 +76,11 @@
 			.then(response => updateUISuccess(response))
 			.catch(() => updateUIFailure());
 
-		$('#location').val('');
-	});
+		locationBlock.value = '';
+	}, false);
 
 	// update list of sports when user selects a different currentCategory (solo/team/all)
-	$('.options div').on('click', updateActivityList);
+	optionsBlock.forEach(el => el.addEventListener('click', updateActivityList, false));
 
 	// handle ajax success
 	function updateUISuccess(response) {
@@ -92,9 +98,7 @@
 			city: name,
 		};
 
-		const $into = $('.conditions')[0];
-
-		ReactDOM.render(<Forecast {...state} />, $into);
+		ReactDOM.render(<Forecast {...state} />, conditionsBlock);
 
 		function Forecast(props) {
 			const { city, celcius, fahrenheit, icon, condition } = props;
@@ -112,21 +116,24 @@
 	// handle selection of a new currentCategory (team/solo/all) 
 	function updateActivityList(event) {
 		const { condition, fahrenheit } = state;
+
 		state.activities = [];
 
-		if (event !== undefined && $(this).hasClass('selected')) {
+		if (event !== undefined && event.target.classList.contains('selected')) {
 			// if the 'event' parameter is defined, then a tab has been clicked; if not, then this is the
 			//   default case and the view simply needs to be updated
 			// if the clicked tab has the class 'selected', then no need to change location of 'selected' class
 			//   or change the DOM
 			return true;
-		} else if (event !== undefined && !$(this).hasClass('selected')) {
+		} else if (event !== undefined && !event.target.classList.contains('selected')) {
 			// if the 'event' parameter is defined, then a tab has been clicked
 			// if the clicked tab does not have the class 'selected', then location of 'selected' class must be added
 			//   to the clicked element and removed from its siblings
-			currentCategory = $(this).attr('id');
-			$('.options div').removeClass('selected');
-			$(this).addClass('selected');
+			currentCategory = event.target.id;
+
+			optionsBlock.forEach(tab => tab.classList.remove('selected'));
+
+			event.target.classList.add('selected');
 		} 
 
 		if (condition === CONDITIONS.RAIN) {
@@ -148,9 +155,7 @@
 			}
 		}
 
-		const $into = $('.activities')[0];
-
-		ReactDOM.render(<Activities {...state} />, $into);
+		ReactDOM.render(<Activities {...state} />, activitiesBlock);
 
 		function Activities(props) {
 			const { activities } = props;
@@ -165,11 +170,11 @@
 			)
 		}
 
-		$('.results').slideDown(SLIDE_SPEED);
+		resultsBlock.classList.add('open');
 	}
 
 	// handle ajax failure
 	function updateUIFailure() {
-		$(".conditions").text(apiErrorMessage);
+		conditionsBlock.textContent = apiErrorMessage;
 	}
 })();
