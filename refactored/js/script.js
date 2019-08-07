@@ -3,6 +3,7 @@
 (function() {
 	const apiUrl = env.API_URL;
 	const apiKey = env.API_KEY;
+	const apiErrorMessage = "Weather information unavailable";
 	const apiAuthParameter = 'appid=';
 	const apiCityParameter = 'q=';
 	const apiDataCollection = 'weather';
@@ -51,16 +52,20 @@
 
 	// handle ajax success
 	function updateUISuccess(response) {
-		const degC = response.main.temp - 273.15;
+		const { main: { temp }, weather, name } = response;
+		const { main, icon } = weather[0];
+
+		const degC = temp - 273.15;
 		const degCInt = Math.floor(degC);
 		const degF = degC * 1.8 + 32;
 		const degFInt = Math.floor(degF);
+
 		state = {
-			condition: response.weather[0].main,
-			icon: getIconUrl(response.weather[0].icon),
+			condition: main,
+			icon: getIconUrl(icon),
 			degCInt: Math.floor(degCInt),
 			degFInt: Math.floor(degFInt),
-			city: response.name
+			city: name,
 		};
 
 		const $into = $('.conditions')[0];
@@ -68,10 +73,11 @@
 		ReactDOM.render(<Forecast {...state} />, $into);
 
 		function Forecast(props) {
+			const { city, degCInt, degFInt, icon, condition } = props;
 			return (
 				<div>
-					<p className="city">{props.city}</p>
-					<p>{props.degCInt}&#176; C / {props.degFInt}&#176; F <img src={props.icon} alt={props.condition} /></p>
+					<p className="city">{city}</p>
+					<p>{degCInt}&#176; C / {degFInt}&#176; F <img src={icon} alt={condition} /></p>
 				</div>
 			)
 		}
@@ -81,6 +87,9 @@
 
 	// handle selection of a new category (team/solo/all) 
 	function updateActivityList(event) {
+		const { condition, degFInt } = state;
+		state.activities = [];
+
 		if (event !== undefined && $(this).hasClass('selected')) {
 			// if the 'event' parameter is defined, then a tab has been clicked; if not, then this is the
 			//   default case and the view simply needs to be updated
@@ -96,10 +105,9 @@
 			$(this).addClass('selected');
 		} 
 
-		state.activities = [];
-		if (state.condition === "Rain") {
+		if (condition === "Rain") {
 			updateState('In');
-		} else if (state.condition === "Snow" || state.degFInt < 50) {
+		} else if (condition === "Snow" || degFInt < 50) {
 			updateState('OutCold');
 		} else {
 			updateState('OutWarm');
@@ -121,7 +129,9 @@
 		ReactDOM.render(<Activities {...state} />, $into);
 
 		function Activities(props) {
-			const activitiesList = props.activities.map(function(activity, index) {
+			const { activities } = props;
+
+			const activitiesList = activities.map(function(activity, index) {
 				return <li key={index}>{activity}</li>
 			});
 			return (
@@ -136,6 +146,6 @@
 
 	// handle ajax failure
 	function updateUIFailure() {
-		$(".conditions").text("Weather information unavailable");
+		$(".conditions").text(apiErrorMessage);
 	}
 })();
