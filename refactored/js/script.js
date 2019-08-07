@@ -98,19 +98,58 @@
 			city: name,
 		};
 
-		ReactDOM.render(<Forecast {...state} />, conditionsBlock);
-
-		function Forecast(props) {
-			const { city, celcius, fahrenheit, icon, condition } = props;
-			return (
-				<div>
-					<p className="city">{city}</p>
-					<p>{celcius}&#176; C / {fahrenheit}&#176; F <img src={icon} alt={condition} /></p>
-				</div>
-			)
-		}
-
+		drawForecast();
 		updateActivityList();
+	}
+
+	function drawForecast() {
+		const { city, celcius, fahrenheit, icon, condition } = state;
+
+		const container = document.createElement('div');
+		const cityParagraph = document.createElement('p');
+		const conditionsParagraph = document.createElement('p');
+		const iconImage = document.createElement('img');
+
+		cityParagraph.setAttribute('class', 'city');
+		cityParagraph.textContent = city;
+
+		conditionsParagraph.textContent = `${celcius}\u00B0 C / ${fahrenheit}\u00B0 F`;
+
+		iconImage.setAttribute('src', icon);
+		iconImage.setAttribute('alt', condition);
+
+		conditionsParagraph.appendChild(iconImage);
+		container.appendChild(cityParagraph);
+		container.appendChild(conditionsParagraph);
+
+		const conditionsContent = document.querySelector('.conditions div');
+		if(conditionsContent) {
+			conditionsBlock.replaceChild(container, conditionsContent);
+		} else {
+			conditionsBlock.appendChild(container);
+		}
+	}
+
+	function drawActivities() {
+		const { activities } = state;
+
+		const container = document.createElement('div');
+		const list = document.createElement('ul');
+		activities.forEach((activity, index) => {
+			const listItem = document.createElement('li');
+			listItem.setAttribute('key', index);
+			listItem.textContent = activity;
+			list.appendChild(listItem);
+		});
+
+		container.appendChild(list);
+
+		const activitiesContent = document.querySelector('.activities div');
+		if(activitiesContent) {
+			activitiesBlock.replaceChild(container, activitiesContent);
+		} else {
+			activitiesBlock.appendChild(container);
+		}
 	}
 
 	// handle selection of a new currentCategory (team/solo/all) 
@@ -155,20 +194,7 @@
 			}
 		}
 
-		ReactDOM.render(<Activities {...state} />, activitiesBlock);
-
-		function Activities(props) {
-			const { activities } = props;
-
-			const activitiesList = activities.map((activity, index) => {
-				return <li key={index}>{activity}</li>
-			});
-			return (
-				<div>
-					<ul>{activitiesList}</ul>
-				</div>
-			)
-		}
+		drawActivities();
 
 		resultsBlock.classList.add('open');
 	}
