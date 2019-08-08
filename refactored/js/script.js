@@ -35,8 +35,6 @@
 		TEAM: 'team',
 	};
 
-	const SLIDE_SPEED = 300;
-
 	let state = {};
 	let currentCategory = CATEGORIES.ALL;
 
@@ -79,10 +77,8 @@
 		locationBlock.value = '';
 	}, false);
 
-	// update list of sports when user selects a different currentCategory (solo/team/all)
 	optionsBlock.forEach(el => el.addEventListener('click', updateActivityList, false));
 
-	// handle ajax success
 	function updateUISuccess(response) {
 		const { main: { temp }, weather, name } = response;
 		const { main, icon } = weather[0];
@@ -100,7 +96,7 @@
 
 		drawForecast();
 		updateActivityList();
-	}
+	};
 
 	function drawForecast() {
 		const { city, celcius, fahrenheit, icon, condition } = state;
@@ -128,7 +124,7 @@
 		} else {
 			conditionsBlock.appendChild(container);
 		}
-	}
+	};
 
 	function drawActivities() {
 		const { activities } = state;
@@ -152,22 +148,14 @@
 		}
 	}
 
-	// handle selection of a new currentCategory (team/solo/all) 
 	function updateActivityList(event) {
 		const { condition, fahrenheit } = state;
 
 		state.activities = [];
 
 		if (event !== undefined && event.target.classList.contains('selected')) {
-			// if the 'event' parameter is defined, then a tab has been clicked; if not, then this is the
-			//   default case and the view simply needs to be updated
-			// if the clicked tab has the class 'selected', then no need to change location of 'selected' class
-			//   or change the DOM
 			return true;
 		} else if (event !== undefined && !event.target.classList.contains('selected')) {
-			// if the 'event' parameter is defined, then a tab has been clicked
-			// if the clicked tab does not have the class 'selected', then location of 'selected' class must be added
-			//   to the clicked element and removed from its siblings
 			currentCategory = event.target.id;
 
 			optionsBlock.forEach(tab => tab.classList.remove('selected'));
@@ -183,23 +171,22 @@
 			updateState(PLACE_TYPES.OUTSIDE.WARM);
 		}
 
-		function updateState(type) {
-			if (currentCategory === CATEGORIES.SOLO) {
-				state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-			} else if (currentCategory === CATEGORIES.TEAM) {
-				state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-			} else {
-				state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-				state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-			}
-		}
-
 		drawActivities();
 
 		resultsBlock.classList.add('open');
 	}
 
-	// handle ajax failure
+	function updateState(type) {
+		if (currentCategory === CATEGORIES.SOLO) {
+			state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+		} else if (currentCategory === CATEGORIES.TEAM) {
+			state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+		} else {
+			state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+			state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+		}
+	}
+
 	function updateUIFailure() {
 		conditionsBlock.textContent = apiErrorMessage;
 	}
