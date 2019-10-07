@@ -1,0 +1,110 @@
+<!Doctype html>
+<html>
+
+<head>
+    <title>Dialog and Notifications Example</title>
+    <!-- <style type="text/css">
+            /* Define a CSS style for the dialog */
+            dialog {
+                background-color: lightgray;
+                padding: 0;
+                border: 0;
+                border-radius: 0.5rem;
+                box-shadow: 0 0 15px black;
+            }
+
+            /* Style the dialog content */
+            dialog>h1 {
+                text-align: center;
+                background-color: darkblue;
+                color: white;
+                border-top-left-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+                margin: 0;
+                padding: 12pt;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 14pt;
+            }
+
+            dialog>#dlgcontent {
+                margin: 5pt;
+            }
+
+            /* Create a CSS style for the dialog backdrop */
+            dialog::backdrop {
+                background-color: rgba(0, 0, 0, 0.75);
+            }
+            form {
+                border: 1px dotted gray;
+                padding: 10pt;
+            }
+
+            form>div {
+                margin-bottom: 5pt;
+            }
+        </style> -->
+    <link rel="stylesheet" href="../../../common.css" />
+</head>
+
+<body>
+    <section>
+        <h1>Dialog Example</h1>
+        <div id="content">
+            <p>The dialog element was introduced officially in the <a
+                    href="https://www.w3.org/TR/html52/interactive-elements.html#the-dialog-element">HTML
+                    5.2 specification</a>.</p>
+            <p>It provides a standard way of displaying popup information with a variety of features such as dimming
+                the page while the dialog is active.</p>
+            <p>Dialogs can also be styled using regular CSS like other elements.</p>
+            <button id="show1">Show Dialog with show()</button>
+            <button id="show2">Show Dialog with showModal()</button>
+        </div>
+        <!-- Define the dialog and its content-->
+        <dialog id="dialog1">
+            <h1>This is a dialog</h1>
+            <div id="dlgcontent">
+                <p>It has content styled like any other HTML element.</p>
+                <button id="okBtn">OK</button>
+                <button id="cancelBtn">Cancel</button>
+            </div>
+        </dialog>
+    </section>
+
+    <section>
+        <h1>Using Native Notifications Example</h1>
+        <div id="content">
+            <p>The Notifications API gives web pages a way to display notifications to the user via the platform's
+                built in mechanism for displaying them.</p>
+            <div>
+                <button id="btnRequest">Request Notification Permission</button>
+                <button id="btnShow1">Show Basic Notification</button>
+            </div>
+            <div>
+                <p>Custom Notification Options:</p>
+                <form action="">
+                    <div>
+                        <label for="notTitle">Title: </label>
+                        <input id="notTitle" type="text" value="Notification Title">
+                    </div>
+                    <div>
+                        <label for="notBody">Body text:</label>
+                        <input type="text" id="notBody" value="Sample text">
+                    </div>
+                    <div>
+                        <label for="notPersist">Make Persistent</label>
+                        <input type="checkbox" id="notPersist">
+                    </div>
+                    <div>
+                        <label for="notIcon">Use Icon</label>
+                        <input type="checkbox" id="notIcon">
+                    </div>
+                </form>
+                <button id="btnShow2">Show Custom Notification</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
