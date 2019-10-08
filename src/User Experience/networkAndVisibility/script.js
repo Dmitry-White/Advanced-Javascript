@@ -1,27 +1,40 @@
 // TODO: Declare event listeners for the online state change
-
-
-// Update the UI with the current network state and information
-function updateNetState(evt) {
+const updateNetwork = () => {
+  const { onLine, connection } = navigator;
   const statusElem = document.getElementById('netState');
-  // TODO: get the online status
 
-
-  // TODO: update the online status
-
+  statusElem.className = onLine ? 'onlineState' : 'offlineState';
+  statusElem.innerText = onLine ? 'ONLINE' : 'OFFLINE';
 
   // TODO: check the connection type with the Network Information API
-  if (navigator.connection) {
-
+  if (connection) {
+    const { effectiveType, downlink, rtt } = connection;
+    statusElem.innerText += `
+      Effective type: ${effectiveType},
+      Downlink speed: ${downlink}MB/s,
+      Estimated round-trip time is: ${rtt}ms
+    `;
   }
+};
 
+const updateVisibility = () => {
+  const outputDiv = document.getElementById('targetElem');
+  const outputVisibility = (div) => {
+    div.innerHTML += `<p>Visibility state: ${document.visibilityState}</p>`;
+  };
 
-  outputDiv = document.getElementById('targetElem');
+  document.addEventListener('visibilitychange', () => outputVisibility(outputDiv));
 
-  // TODO: record the initial visibility state of the tab
+  outputVisibility(outputDiv);
+};
 
+// Update the UI with the current network state and information
+const updateState = () => {
+  updateNetwork();
+  updateVisibility();
+};
 
-  // TODO: set up event listeners for visibility changes
-}
+window.addEventListener('online', updateNetwork);
+window.addEventListener('offline', updateNetwork);
 
-window.addEventListener('load', updateNetState);
+window.addEventListener('load', updateState);
