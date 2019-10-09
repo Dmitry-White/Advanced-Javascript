@@ -1,0 +1,29 @@
+:-webkit-full-screen button {
+  background-color: green;
+  color: white
+}
+
+:-moz-full-screen button {
+  background-color: green;
+  color: white
+}
+
+:-ms-fullscreen button {
+  background-color: green;
+  color: white
+}
+
+:full-screen button {
+  background-color: green;
+  color: white
+}
+
+:fullscreen button {
+  background-color: green;
+  color: white
+}
+
+img:-webkit-full-screen {
+  border: 5px solid blue;
+  background-color: green;
+}
