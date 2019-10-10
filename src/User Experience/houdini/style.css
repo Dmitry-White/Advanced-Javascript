@@ -3,8 +3,9 @@
   height: 300px;
   border: 1px solid gray;
 
-  /* TODO: Use the paint API to paint the background of the box */
-
-  /* TODO: Define some custom properties to use in the paint function */
-
+  /* Use the paint API to paint the background of the box */
+  background-image: paint(painter);
+  /* Define some custom properties to use in the paint function */
+  --cross-thickness: 2;
+  --cross-color: red;
 }
