@@ -1,26 +1,9 @@
 (function() {
 	const url = CONFIG.WEATHER_API.URL;
 	const apiKey = CONFIG.WEATHER_API.KEY;
-
-	fetch(url + '&appid=' + apiKey)
-		.then(res => {
-			if(!res.ok) {
-				console.log("Houston, we've got a problem.");
-			}
-
-			console.log(res);
-			console.log(res.json());
-		});
-})();
-/*
-(function() {
-	const url = CONFIG.WEATHER_API.URL;
-	const apiKey = CONFIG.WEATHER_API.KEY;
-	const httpRequest = new XMLHttpRequest();
 	const weatherBox = document.getElementById('weather');
 
-	const updateUISuccess = (responseText) => {
-		const response = JSON.parse(responseText);
+	const updateUISuccess = (response) => {
 		const condition = response.weather[0].main;
 		const degC = response.main.temp - 273.15;
 		const degCInt = Math.floor(degC);
@@ -33,24 +16,18 @@
 	const updateUIError = () => {
 		weatherBox.className = 'hidden';
 	}
-	
-	const responseMethod = () => {
-		if (httpRequest.readyState === 4) {
-			if (httpRequest.status === 200) {
-				updateUISuccess(httpRequest.responseText);
-			} else {
-				updateUIError()
+
+	fetch(url + '&appid=' + apiKey)
+		.then(res => {
+			if(!res.ok) {
+				throw Error(res.statusText);
 			}
-			console.log(httpRequest.responseText);
-		}
-	};
 
-	const makeRequest = () => {
-		httpRequest.onreadystatechange = responseMethod;
-		httpRequest.open('GET', url + '&appid=' + apiKey);
-		httpRequest.send();
-	};
-
-	makeRequest();
+			return res.json();
+		})
+		.then(res => updateUISuccess(res))
+		.catch(err => {
+			updateUIError();
+			console.log(err);
+		});
 })();
-*/
