@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Landon Hotel</title>
-  <script src="js/angular.min.js"></script>
   <script src="config.js"></script>
+  <script src="js/angular.min.js"></script>
   <script src="js/controllers.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -194,12 +194,12 @@
         </div><!-- content -->
       </article><!-- article -->
   </div><!-- events -->
-  <div class="scene fullheight" id="attractions" ng-app="listApp" ng-controller="ListController">
-    <article class="content">
+  <div class="scene fullheight" id="attractions" ng-app="listApp" ng-controller="ListController as eventsList">
+    <article class="content"  ng-if="eventsList.showError">
       <h1>Local Attractions</h1>
       <p>Whether you’re a theater enthusiast, enjoy epic shopping, or love to stroll and people watch, London’s West End has an endless opportunity to partake. The heart of London’s "Theatreland" offering the best in drama, comedy, and musical productions.</p>
     </article>
-<!--    <article class="content">
+    <article class="content" ng-if="!eventsList.showError">
         <h1>Upcoming Events in London</h1>
         <div class="main">
           <div class="search">
@@ -221,14 +221,15 @@
             </label>
           </div>
           <ul class="eventlist">
-            <li class="event cf">
+            <li class="event cf" ng-repeat="item in eventsList.events | filter: query | orderBy: eventOrder:direction">
               <div class="info">
-
+                <h2><a href="{{item.url}}" target="_blank">{{item.name.text}}</a></h2>
+                <p>{{item.start.local | date:"dd MMMM ', ' h:mma"}}</p>
               </div>
             </li>
           </ul>
         </div>
-    </article>-->
+    </article>
   </div><!-- attractions -->
 </main>
 <footer class="scene">
