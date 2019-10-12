@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Landon Hotel</title>
+  <script src="js/angular.min.js"></script>
+  <script src="config.js"></script>
+  <script src="js/controllers.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
@@ -191,11 +194,41 @@
         </div><!-- content -->
       </article><!-- article -->
   </div><!-- events -->
-  <div class="scene fullheight" id="attractions">
+  <div class="scene fullheight" id="attractions" ng-app="listApp" ng-controller="ListController">
     <article class="content">
       <h1>Local Attractions</h1>
-        <p>Whether you’re a theater enthusiast, enjoy epic shopping, or love to stroll and people watch, London’s West End has an endless opportunity to partake. The heart of London’s "Theatreland" offering the best in drama, comedy, and musical productions.</p>
+      <p>Whether you’re a theater enthusiast, enjoy epic shopping, or love to stroll and people watch, London’s West End has an endless opportunity to partake. The heart of London’s "Theatreland" offering the best in drama, comedy, and musical productions.</p>
     </article>
+<!--    <article class="content">
+        <h1>Upcoming Events in London</h1>
+        <div class="main">
+          <div class="search">
+            <label>search: </label>
+            <input ng-model="query" placeholder="Search for events" autofocus>
+            <label class="formgroup">by:
+              <select ng-model="eventOrder" ng-init="eventOrder='start.local'">
+                <option value="start.local">Date</option>
+                <option value="name.text">Name</option>
+              </select>
+            </label>
+            <label class="formgroup">
+              <input type="radio" ng-model="direction" name="direction" checked>
+              ascending
+            </label>
+            <label class="formgroup">
+              <input type="radio" ng-model="direction" name="direction" value="reverse">
+              descending
+            </label>
+          </div>
+          <ul class="eventlist">
+            <li class="event cf">
+              <div class="info">
+
+              </div>
+            </li>
+          </ul>
+        </div>
+    </article>-->
   </div><!-- attractions -->
 </main>
 <footer class="scene">
@@ -209,9 +242,9 @@
     </div>
   </article>
 </footer>
-  <script src="config.js"></script>
-  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/promise.min.js"></script>
+  <script src="js/fetch.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/script2.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
 </body>
 </html>
