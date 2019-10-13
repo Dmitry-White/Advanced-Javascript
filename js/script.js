@@ -1,5 +1,5 @@
 const App = () => {
-  const displayProducts = () => {
+  const displayProducts = (data) => {
     // create document fragment and template for each product
     const fragment = document.createDocumentFragment();
     
@@ -18,7 +18,7 @@ const App = () => {
     item.appendChild(text);
 
     // create a document node for each product and add it to the document fragment
-    PRODUCT_DATA.products.forEach((el) => {
+    data.products.forEach((el) => {
       product = item.cloneNode(true);
 
       const currentImage = product.querySelector(".product-image");
@@ -34,7 +34,7 @@ const App = () => {
     section.appendChild(fragment);
   }
 
-  const displayPeople = () => {
+  const displayPeople = (data) => {
     const fragment = document.createDocumentFragment();
 
     const section = document.querySelector(".people-cards");
@@ -60,7 +60,7 @@ const App = () => {
     item.appendChild(cardText);
 
     // create a document node for each product and add it to the document fragment
-    PERSON_DATA.cards.forEach((el) => {
+    data.cards.forEach((el) => {
       person = item.cloneNode(true);
 
       const currentImage = person.querySelector("img");
@@ -78,21 +78,19 @@ const App = () => {
     section.appendChild(fragment);
   }
 
-  const validate = (dataCheck, callback) => {
+  const validate = (data, schema, callback) => {
+    const dataCheck = tv4.validateMultiple(data, schema);
+    
     if (dataCheck.valid) {
       console.log('Valid Data');
-      callback();
+      callback(data);
     } else {
       console.log(dataCheck);
     }
   }
 
-  const isProductsValid = tv4.validateMultiple(PRODUCT_DATA, productSchema);
-
-  validate(isProductsValid, displayProducts);
-
-  displayPeople();
-
+  validate(PRODUCT_DATA, productSchema, displayProducts);
+  validate(PERSON_DATA, personSchema, displayPeople);
 }
 
 document.addEventListener("DOMContentLoaded", App);
