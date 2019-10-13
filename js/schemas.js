@@ -20,8 +20,16 @@ const productSchema = {
           "alt": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "name",
+          "image",
+          "alt"
+        ]
       }
-    }
+    },
+    "required": [
+      "products"
+    ]
   }
 };
