@@ -1,5 +1,5 @@
 // JSON containing product data
-var productData = {
+const PRODUCT_DATA = {
   "products": [
     {
       "image": "vitamin-a.jpg",
@@ -95,7 +95,7 @@ var productData = {
 };
 
 // JSON containing person data
-var personData = {
+const PERSON_DATA = {
   "cards": [
     {
       "img": {
@@ -166,4 +166,4 @@ var personData = {
   ]
 };
 
-var nullData = {};
+const EMPTY_OBJECT = Object.freeze({});
