@@ -78,7 +78,19 @@ const App = () => {
     section.appendChild(fragment);
   }
 
-  displayProducts();
+  const validate = (dataCheck, callback) => {
+    if (dataCheck.valid) {
+      console.log('Valid Data');
+      callback();
+    } else {
+      console.log(dataCheck);
+    }
+  }
+
+  const isProductsValid = tv4.validateMultiple(PRODUCT_DATA, productSchema);
+
+  validate(isProductsValid, displayProducts);
+
   displayPeople();
 
 }
