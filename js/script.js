@@ -1,8 +1,24 @@
 const App = () => {
-  const productDataYAML = YAML.stringify(PRODUCT_DATA);
-  const peopleDataYAML = YAML.stringify(PERSON_DATA);
-  console.log(productDataYAML);
-  console.log(peopleDataYAML);
+  const PRODUCTS_YAML_URL = '/js/data/products.yml';
+  const PEOPLE_YAML_URL = '/js/data/people.yml';
+
+  const displayProductsYAML = (data) => {
+    const productDataYAML = YAML.stringify(data);
+    console.log(productDataYAML);
+
+    const productsYaml = YAML.load(PRODUCTS_YAML_URL);
+
+    displayProducts(productsYaml);
+  };
+
+  const displayPeopleYAML = (data) => {
+    const peopleDataYAML = YAML.stringify(data);
+    console.log(peopleDataYAML);
+
+    const peopleYaml = YAML.load(PEOPLE_YAML_URL);
+
+    displayPeople(peopleYaml);
+  };
 
   const displayProductsXML = (data) => {
     const j2x = json2xml(data);
@@ -147,7 +163,10 @@ const App = () => {
   }
 
   displayProductsXML(PRODUCT_DATA_XML);
-  displayPeopleXML(PERSON_DATA_XML)
+  displayPeopleXML(PERSON_DATA_XML);
+
+  displayProductsYAML(PRODUCT_DATA);
+  displayPeopleYAML(PERSON_DATA);  
 
   validate(PRODUCT_DATA, productSchema, displayProducts);
   validate(PERSON_DATA, personSchema, displayPeople);
