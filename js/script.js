@@ -1,4 +1,9 @@
 const App = () => {
+  const productDataYAML = YAML.stringify(PRODUCT_DATA);
+  const peopleDataYAML = YAML.stringify(PERSON_DATA);
+  console.log(productDataYAML);
+  console.log(peopleDataYAML);
+
   const displayProductsXML = (data) => {
     const j2x = json2xml(data);
     const section = document.querySelector(".product-list");
