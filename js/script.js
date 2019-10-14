@@ -1,4 +1,10 @@
 const App = () => {
+  const displayProductsXML = (data) => {
+    const j2x = json2xml(data);
+    const section = document.querySelector(".product-list");
+    section.innerHTML = j2x;
+  }
+
   const displayProducts = (data) => {
     // create document fragment and template for each product
     const fragment = document.createDocumentFragment();
@@ -88,6 +94,8 @@ const App = () => {
       console.log(dataCheck);
     }
   }
+
+  displayProductsXML(PRODUCT_DATA_XML);
 
   validate(PRODUCT_DATA, productSchema, displayProducts);
   validate(PERSON_DATA, personSchema, displayPeople);
