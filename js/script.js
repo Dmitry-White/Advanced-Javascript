@@ -5,6 +5,52 @@ const App = () => {
     section.innerHTML = j2x;
   }
 
+  const displayPeopleXML = (data) => {
+    const parser = new DOMParser();
+    const peopleDataNode = parser.parseFromString(data, 'text/xml');
+    const peopleDataJson = xml2json(peopleDataNode, '');
+    const parsedData = JSON.parse(peopleDataJson);
+
+    const fragment = document.createDocumentFragment();
+
+    const section = document.querySelector(".people-cards");
+    const item = document.createElement("div");
+    const image = document.createElement("img");
+    const cardInfo = document.createElement("div");
+    const cardName = document.createElement("h3");
+    const cardTitle = document.createElement("h4");
+    const cardText = document.createElement("p");
+
+    let person = EMPTY_OBJECT;
+
+    item.className = "person-card";
+    cardInfo.className = "card-info";
+    cardName.className = "card-name";
+    cardTitle.className = "card-title";
+    cardText.className = "card-text";
+
+    cardInfo.appendChild(cardName);
+    cardInfo.appendChild(cardTitle);
+    item.appendChild(image);
+    item.appendChild(cardInfo);
+    item.appendChild(cardText);
+
+    parsedData.people.div.forEach((el) => {
+      person = item.cloneNode(true);
+
+      const currentImage = person.querySelector("img");
+      currentImage.src = el.img["@src"];
+      currentImage.alt = el.img["@alt"];
+
+      person.querySelector(".card-name").innerHTML = el.div.h3["#text"];
+      person.querySelector(".card-title").innerHTML = el.div.h4["#text"];
+      person.querySelector(".card-text").innerHTML = el.p["#text"];
+
+      fragment.appendChild(person);
+    });
+    section.appendChild(fragment);
+  };
+
   const displayProducts = (data) => {
     // create document fragment and template for each product
     const fragment = document.createDocumentFragment();
@@ -96,6 +142,7 @@ const App = () => {
   }
 
   displayProductsXML(PRODUCT_DATA_XML);
+  displayPeopleXML(PERSON_DATA_XML)
 
   validate(PRODUCT_DATA, productSchema, displayProducts);
   validate(PERSON_DATA, personSchema, displayPeople);
