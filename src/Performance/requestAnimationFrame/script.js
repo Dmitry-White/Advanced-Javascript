@@ -1,25 +1,33 @@
-const canvas = document.querySelector('#canvas1');
-const context = canvas.getContext('2d');
+const startButton = document.querySelector('#btnStart');
 const stopButton = document.querySelector('#btnStop');
-const animationRef = null;
+const canvas = document.querySelector('#canvas1');
+const BACKGROUND_COLOR = '#00ddee';
+const RECTANGLE_COLOR = 'yellow';
+const RECTANGLE_BORDER_COLOR = 'red';
+const RECTANGLE_BORDER_WIDTH = 3;
+
+const context = canvas.getContext('2d');
+const canvasWidth = context.canvas.width;
+const canvasHeight = context.canvas.height;
+
+// Set up the animation constants and initial state
+let animationRef = null;
+let direction = 2;
+let rectX = 0;
+const RECTANGLE_Y = 200;
+const RECTANGLE_SIDE = 40;
 
 // Erases the given canvas and draws a colored background
 const blank = () => {
   // Erase the canvas before each update cycle
-  context.fillStyle = '#00ddee';
-  context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+  context.fillStyle = BACKGROUND_COLOR;
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
 };
 
-const anim = (timestamp) => {
-  // Set up the animation constants and initial state
-  let rectX = 0;
-  const rectY = 200;
-  const rectSide = 40;
-  let direction = 2;
-
+const anim = () => {
   // While the object is still within the canvas, move it by a small amount
-  if (direction > 0 && (rectX + rectSide) < context.canvas.width) {
-    if ((rectX + rectSide + direction) >= context.canvas.width) {
+  if (direction > 0 && (rectX + RECTANGLE_SIDE) < canvasWidth) {
+    if ((rectX + RECTANGLE_SIDE + direction) >= canvasWidth) {
       direction = -direction;
     } else {
       rectX += direction;
@@ -31,27 +39,36 @@ const anim = (timestamp) => {
     }
   }
 
-  blank(context);
-  context.fillStyle = 'yellow';
-  context.strokeStyle = 'red';
-  context.lineWidth = 3;
-  context.fillRect(rectX, rectY, rectSide, rectSide);
-  context.strokeRect(rectX, rectY, rectSide, rectSide);
+  blank();
 
-  // TODO: Request another update frame from the browser
+  context.fillStyle = RECTANGLE_COLOR;
+  context.strokeStyle = RECTANGLE_BORDER_COLOR;
+  context.lineWidth = RECTANGLE_BORDER_WIDTH;
+
+  context.fillRect(rectX, RECTANGLE_Y, RECTANGLE_SIDE, RECTANGLE_SIDE);
+  context.strokeRect(rectX, RECTANGLE_Y, RECTANGLE_SIDE, RECTANGLE_SIDE);
+
+  // Request another update frame from the browser
+  animationRef = requestAnimationFrame(anim);
 };
 
 // Initializes each canvas drawing state
 const init = () => {
-  blank(context);
+  blank();
 
-  // TODO: start the animation by requesting a time slice
-  // to draw the scene updates
+  // Start the animation by requesting a time slice to draw the scene updates
+  animationRef = requestAnimationFrame(anim);
 };
 
-// TODO: Stop the current animation when clicked
-stopButton.addEventListener('click', () => {
-
+// Start the animation when clicked
+startButton.addEventListener('click', () => {
+  if (!animationRef) animationRef = requestAnimationFrame(anim);
 });
 
-window.addEventListener('load', init);
+// Stop the current animation when clicked
+stopButton.addEventListener('click', () => {
+  cancelAnimationFrame(animationRef);
+  animationRef = null;
+});
+
+window.addEventListener('DOMContentLoaded', init);
