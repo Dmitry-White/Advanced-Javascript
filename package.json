@@ -1,0 +1,17 @@
+{
+  "name": "modern-browser-apis",
+  "version": "1.0.0",
+  "description": "Some examples of modern browser APIs usage",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint src",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "author": "Dmitry White",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
