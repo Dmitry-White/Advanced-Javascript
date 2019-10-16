@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prefetch & Preload Example</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="prefetch" href="prefetch_page.html">
+    <link rel="prefetch" href="script.js" as="script">
+    <link rel="preload" href="Tulips.jpg" as="image">
+</head>
+
+<body>
+    <section>
+        <h1>Pre-fetching content</h1>
+        <div class="content">
+            <p>The <code>prefetch</code> attribute can be used to give a hint to the browser to retrieve a resource
+                very likely to be needed on the next navigation. With this information, the browser can determine
+                whether it is worthwhile to load the resource in advance. </p>
+            <p>This <a href="prefetch_page.html">link</a> is to another page. When identified with an appropriate
+                <code>link</code>
+                tag with <code>rel="prefetch"</code>, the page will be downloaded in advance by the browser and served
+                from the cache when the user clicks the link.</p>
+        </div>
+    </section>
+    <section>
+        <h1>Pre-loading content</h1>
+        <div class="content">
+            <p class="prefetch_target">The <code>preload</code> attribute can be used to direct the browser to retrieve a resource
+                very likely to be needed within the current page. To use this attribute, you need to specify
+                the type of resource to be loaded.</p>
+            <p>This is similar to the <code>prefetch</code> attribute, but that directive is used to
+                prefetch resources that will be used on the next navigation, not the current page.</p>
+            <p>The <code>div</code> element below has a background-image property applied. However, it is not
+                loaded until the browser has parsed the CSS and identified the image. To speed up the loading process
+                we can indicate to the browser that the image should be loaded ahead of time.</p>
+
+            <div id="targetElem"></div>
+        </div>
+    </section>
+</body>
+
+</html>
