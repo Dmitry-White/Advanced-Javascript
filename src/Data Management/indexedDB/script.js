@@ -10,41 +10,57 @@ const init = () => {
   let instance1;
   let instance2;
 
+  const iterateListHandler = (value, key, index) => console.log(index, [key, value]);
+  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`);
+
   // set up event handlers
   buttonSet.addEventListener('click', () => {
     const val = document.getElementById('lfVal').value;
     const key = document.getElementById('lfKey').value;
 
     // TODO: Store the data locally
+    localforage.setItem(key, val)
+      .then(loggingHandler('SetItem stored'));
   });
+
   buttonGet.addEventListener('click', () => {
     const key = document.getElementById('lfKey').value;
 
     // TODO: Retrieve the data
+    localforage.getItem(key)
+      .then(loggingHandler('GetItem retrieved'));
   });
+
   buttonDelete.addEventListener('click', () => {
     const key = document.getElementById('lfKey').value;
 
     // TODO: Delete the stored key
+    localforage.removeItem(key)
+      .then(loggingHandler('RemoveItem removed'));
   });
+
   buttonList.addEventListener('click', () => {
     // TODO: Use iterate to list all the stored data
-
+    localforage.iterate(iterateListHandler)
+      .then(loggingHandler('Itereation complete'));
   });
 
   // TODO: LocalForage also supports multiple database instances
   buttonMulti.addEventListener('click', () => {
-
+    instance1 = localforage.createInstance({ name: 'instance1' });
+    instance2 = localforage.createInstance({ name: 'instance2' });
   });
 
   // TODO: Store data using the same key name into different database instances
   buttonStore.addEventListener('click', () => {
-
+    instance1.setItem('key1', 'instance 1 value');
+    instance2.setItem('key1', 'instance 2 value');
   });
 
   // TODO: Retrieve the data from separate instances using the same key name
   buttonGetData.addEventListener('click', () => {
-
+    instance1.iterate(iterateListHandler);
+    instance2.iterate(iterateListHandler);
   });
 };
 
