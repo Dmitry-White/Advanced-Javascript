@@ -10,8 +10,8 @@ const init = () => {
   let instance1;
   let instance2;
 
-  const iterateListHandler = (value, key, index) => console.log(index, [key, value]);
-  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`);
+  const iterateListHandler = (value, key, index) => console.log(index, [key, value]); // eslint-disable-line
+  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`); // eslint-disable-line
 
   // set up event handlers
   buttonSet.addEventListener('click', () => {
@@ -19,6 +19,7 @@ const init = () => {
     const key = document.getElementById('lfKey').value;
 
     // TODO: Store the data locally
+    // eslint-disable-next-line
     localforage.setItem(key, val)
       .then(loggingHandler('SetItem stored'));
   });
@@ -27,6 +28,7 @@ const init = () => {
     const key = document.getElementById('lfKey').value;
 
     // TODO: Retrieve the data
+    // eslint-disable-next-line
     localforage.getItem(key)
       .then(loggingHandler('GetItem retrieved'));
   });
@@ -35,19 +37,23 @@ const init = () => {
     const key = document.getElementById('lfKey').value;
 
     // TODO: Delete the stored key
+    // eslint-disable-next-line
     localforage.removeItem(key)
       .then(loggingHandler('RemoveItem removed'));
   });
 
   buttonList.addEventListener('click', () => {
     // TODO: Use iterate to list all the stored data
+    // eslint-disable-next-line
     localforage.iterate(iterateListHandler)
       .then(loggingHandler('Itereation complete'));
   });
 
   // TODO: LocalForage also supports multiple database instances
   buttonMulti.addEventListener('click', () => {
+    // eslint-disable-next-line
     instance1 = localforage.createInstance({ name: 'instance1' });
+    // eslint-disable-next-line
     instance2 = localforage.createInstance({ name: 'instance2' });
   });
 
