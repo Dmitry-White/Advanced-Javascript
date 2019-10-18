@@ -1,10 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Storage and Memory Example</title>
-        <style type="text/css">
-        </style>
-        <link rel="stylesheet" href="../../style.css" />
+        <title>Device and Storage Example</title>
+        <link rel="stylesheet" href="../../../common.css" />
     </head>
     <body>
         <h1>StorageManager and Device Memory</h1>
@@ -34,27 +32,6 @@
                 Device Memory: <span id="devMem"></span>MB
             </p>
         </div>
-        <script>
-            window.addEventListener("load", function () {
-                // TODO: See how much space my origin has available
-                if (navigator.storage && navigator.storage.estimate) {
-
-                }
-
-                // TODO: detect whether the app's data is marked as persistent
-                if (navigator.storage && navigator.storage.persisted) {
-
-                }
-
-                // TODO: Request storage persistence from the browser
-                document.getElementById('btnReqPers').addEventListener("click", function () {
-
-                });
-
-                // TODO: Determine the device memory available
-                // For security purposes, this API only reports  0.25, 0.5, 1, 2, 4, 8
-
-            })
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
