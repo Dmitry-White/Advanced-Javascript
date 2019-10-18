@@ -5,21 +5,44 @@ const init = () => {
   const buttonGet = document.getElementById('btnGet');
   const buttonClear = document.getElementById('btnClear');
 
-  const getJSONData = (url, cacheName) => {
-    // TODO: First check the cache to see if we already have the data
+  const cacheHandler = (cache, result, url) => {
+    if (result === undefined) {
+      console.log('Not found in cache: ', url);
+      fetch(url).then((res) => {
+        const responseClone = res.clone();
 
-    // fetch the request normally
-    fetch(url).then((result) => {
-      // TODO: Make a copy of the response since it can only be read once
-
-      // TODO: Add the result to the cache
-      result.text().then((data) => {
-        console.log(data);
+        cache.put(url, res);
+        responseClone.text()
+          .then((data) => console.log('Network hit: ', data));
       });
-    });
+    } else {
+      console.log('Found in cache: ', url);
+
+      result.text()
+        .then((data) => console.log('Cache hit: ', data));
+    }
   };
 
-  const clearCachedData = () => {};
+  const getJSONData = (url, cacheName) => {
+    if ('caches' in window) {
+      caches.open(cacheName)
+        .then(
+          (cache) => cache.match(url)
+            .then((res) => cacheHandler(cache, res, url)),
+        );
+    } else {
+      console.log('Cache API is not available');
+    }
+  };
+
+  const clearCachedData = (cacheName) => {
+    if ('caches' in window) {
+      caches.delete(cacheName)
+        .then((res) => console.log(res ? 'Cache Deleted' : 'Error'));
+    } else {
+      console.log('Cache API is not available');
+    }
+  };
 
   buttonGet.addEventListener('click', () => getJSONData(URL, CACHE_NAME));
 

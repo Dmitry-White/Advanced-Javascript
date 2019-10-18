@@ -10,8 +10,8 @@ const init = () => {
   let instance1;
   let instance2;
 
-  const iterateListHandler = (value, key, index) => console.log(index, [key, value]); // eslint-disable-line
-  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`); // eslint-disable-line
+  const iterateListHandler = (value, key, index) => console.log(index, [key, value]);
+  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`);
 
   // set up event handlers
   buttonSet.addEventListener('click', () => {
