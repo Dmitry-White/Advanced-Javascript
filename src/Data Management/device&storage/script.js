@@ -1,24 +1,37 @@
 const init = () => {
   const buttonRequesInfo = document.querySelector('#btnReqPers');
   const deviceMemory = document.querySelector('#devMem');
+  const storageEstimate = document.querySelector('#dtEst');
+  const storageUsage = document.querySelector('#dtUsage');
+  const storagePersisted = document.querySelector('#dtPersisted');
 
-  // TODO: See how much space my origin has available
   if (navigator.storage && navigator.storage.estimate) {
-
+    navigator.storage.estimate()
+      .then((estimate) => {
+        storageEstimate.textContent = estimate.quota;
+        storageUsage.textContent = estimate.usage;
+      });
   }
 
-  // TODO: detect whether the app's data is marked as persistent
   if (navigator.storage && navigator.storage.persisted) {
-
+    navigator.storage.persisted()
+      .then((persisted) => {
+        storagePersisted.textContent = persisted ? 'true' : 'false';
+      });
   }
 
-  // TODO: Request storage persistence from the browser
+  if (navigator.deviceMemory) {
+    deviceMemory.textContent = navigator.deviceMemory;
+  }
+
   buttonRequesInfo.addEventListener('click', () => {
-
+    if (navigator.storage) {
+      navigator.storage.persist()
+        .then((res) => (res
+          ? console.log('Storage is persistent')
+          : console.log('Unable to make storage persistent')));
+    }
   });
-
-  // TODO: Determine the device memory available
-  // For security purposes, this API only reports  0.25, 0.5, 1, 2, 4, 8
 };
 
 window.addEventListener('load', init);
