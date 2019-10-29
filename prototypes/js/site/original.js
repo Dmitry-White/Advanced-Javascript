@@ -1,55 +1,55 @@
-(function() {
+(() => {
 
-$(document).ready(function(e) {
-	accordion.init();
-	bab.init();
-});
+	const html = document.documentElement;
+	const	$html = $(html);
+	const current = 'current';
+	const close = 'close';
+	const open = 'open';
+	const selected = 'selected';
+	const jsNone = 'js_none';
+	const ariaHidden = 'aria-hidden';
+	const ariaInvalid = 'aria-invalid';
+	const ariaDescribedBy = 'aria-describedby';
+	let	multiplier;
 
-var html = document.documentElement,
-	$html = $(html),
-	multiplier,
-	current = 'current',
-	close = 'close',
-	open = 'open',
-	selected = 'selected',
-	jsNone = 'js_none',
-	ariaHidden = 'aria-hidden',
-	ariaInvalid = 'aria-invalid',
-	ariaDescribedBy = 'aria-describedby';
+	const accordion = {
+		init: function () {
+			const $accordionLinks = $('.accordion > li > a');
 
-var accordion = {
-	init: function() {
-		var $accordionLinks = $('.accordion > li > a');
-		
-		$accordionLinks.on('click', function(e) {
-			e.preventDefault();
-			$accordionLinks.removeClass(open);
-			$(this).addClass(open);
-		});
-	}
-};
-
-var bab = {
-	init: function() {
-		var query = window.location.search.substring(1),
-        params = query.split('&');
-		
-		for (var i in params) { 
-			var keyValue = params[i].split('=');
-      keyValue[0].value = keyValue[1];
+			$accordionLinks.on('click', function (e) {
+				e.preventDefault();
+				$accordionLinks.removeClass(open);
+				$(this).addClass(open);
+			});
 		}
-		
-		var totalFlowers = 0,
-			$totalFlowers = $('#total_flowers'),
-			$qtys = $('.bab_item').find('input[type="number"]');
-			
-		$qtys.each(function(i) {
-			totalFlowers += parseInt($(this)[0].value);
-		});
-		
-		$totalFlowers.html(totalFlowers);
-		// $('#total_cost').html('$' + Number(parseFloat($('input[name="unitprice"]')[0].value)).toFixed(2));
-	}
-};
+	};
 
+	const bab = {
+		init: function () {
+			const query = window.location.search.substring(1);
+			const params = query.split('&');
+			const $totalFlowers = $('#total_flowers');
+			const $qtys = $('.bab_item').find('input[type="number"]');
+			let totalFlowers = 0;
+
+			for (let i in params) {
+				const keyValue = params[i].split('=');
+				keyValue[0].value = keyValue[1];
+			}
+
+			$qtys.each(function (i) {
+				totalFlowers += parseInt($(this)[0].value);
+			});
+
+			$totalFlowers.html(totalFlowers);
+			// $('#total_cost').html('$' + Number(parseFloat($('input[name="unitprice"]')[0].value)).toFixed(2));
+		}
+	};
+
+	const initApp = () => {
+		accordion.init();
+		bab.init();
+	}
+
+	$(document).ready(initApp);
 })();
