@@ -551,4 +551,4 @@
   };
 
   $(document).ready(initApp);
-}());
+})();
