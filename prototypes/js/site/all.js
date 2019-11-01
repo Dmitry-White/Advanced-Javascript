@@ -595,5 +595,61 @@
     tooltips.init();
   };
 
+  function Arrangement(name, vase, quantity = 1) {
+    this.type = 'floral';
+    this.storage = 'cool';
+    this.name = name;
+    this.vase = vase;
+    this.quantity = quantity;
+    this.logItem = function () {
+      console.log(`%c${this.name}`, 'font-weight: bold');
+      for (const prop in this) {
+        console.log(' ', prop, ': ', this[prop]);
+      }
+    };
+  }
+
+  function Live(name, pot, quantity = 1) {
+    this.type = 'floral';
+    this.storage = 'warm';
+    this.name = name;
+    this.pot = pot;
+    this.quantity = quantity;
+    this.logItem = function () {
+      console.log(`%c${this.name}`, 'font-weight: bold');
+      for (const prop in this) {
+        console.log(' ', prop, ': ', this[prop]);
+      }
+    };
+  }
+
+  function Bouquet(name, vase) {
+    this.type = 'floral';
+    this.storage = 'cool';
+    this.name = name;
+    this.vase = vase;
+    this.logItem = function () {
+      console.log(`%c${this.name}`, 'font-weight: bold');
+      for (const prop in this) {
+        console.log(' ', prop, ': ', this[prop]);
+      }
+    };
+    this.flowers = {
+      addStem(name, quantity = 1, color = 'Default') {
+        this[name] = new Flower(quantity, color);
+      },
+    };
+  }
+
+  function Flower(quantity, color) {
+    this[color] = quantity;
+    this.logItem = function () {
+      console.log(`%c${this.name}`, 'font-weight: bold');
+      for (const prop in this) {
+        console.log(' ', prop, ': ', this[prop]);
+      }
+    };
+  }
+
   $(document).ready(initApp);
 })();
