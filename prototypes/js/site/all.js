@@ -553,49 +553,66 @@
     tooltips.init();
   };
 
-  function Item() {}
-  Item.prototype.type = 'floral';
-  Item.prototype.logItem = function () {
-    console.log(`%c${this.name}`, 'font-weight: bold');
-    for (const prop in this) {
-      console.log(' ', prop, ': ', this[prop]);
+  class Item {
+    constructor() {
+      this.type = 'floral';
+    }
+    logItem() {
+      console.log(`%c${this.name}`, 'font-weight: bold');
+      for (const prop in this) {
+        console.log(' ', prop, ': ', this[prop]);
+      }
     }
   };
 
-  function Flower(quantity, color) {
-    this[color] = quantity;
-  }
-  Flower.prototype = new Item();
-
-  function Live(name, pot, quantity = 1) {
-    this.name = name;
-    this.pot = pot;
-    this.quantity = quantity;
-  }
-  Live.prototype = new Item();
-  Live.prototype.storage = 'warm';
-
-  function Cut() {}
-  Cut.prototype = new Item();
-  Cut.prototype.storage = 'cool';
-
-  function Bouquet(name, vase) {
-    this.name = name;
-    this.vase = vase;
-  }
-  Bouquet.prototype = new Cut();
-  Bouquet.prototype.flowers = {
-    addStem(name, quantity = 1, color = 'Default') {
-      this[name] = new Flower(quantity, color);
-    },
+  class Flower extends Item {
+    constructor(quantity, color) {
+      super();
+      this[color] = quantity;
+    }
   };
 
-  function Arrangement(name, vase, quantity = 1) {
-    this.name = name;
-    this.vase = vase;
-    this.quantity = quantity;
+  class Live extends Item {
+    constructor(name, pot, quantity = 1) {
+      super();
+      this.name = name;
+      this.pot = pot;
+      this.quantity = quantity;
+      this.storage = 'warm';
+    }
   }
-  Arrangement.prototype = new Cut();
+
+  class Cut extends Item {
+    constructor(name, vase) {
+      super();
+      this.name = name;
+      this.vase = vase;
+      this.storage = 'cool';
+    }
+  }
+
+  class Bouquet extends Cut {
+    constructor(name, vase) {
+      super(name, vase);
+      this.flowers = {
+        addStem(name, quantity = 1, color = 'Default') {
+          this[name] = new Flower(quantity, color);
+        },
+      };
+    }
+  }
+
+  class Arrangement extends Cut {
+    constructor(name, vase, quantity = 1) {
+      super(name, vase);
+      this.quantity = quantity;
+      this.flowers = {
+        addStem(name, quantity = 1, color = 'Default') {
+          this[name] = new Flower(quantity, color);
+        },
+      };
+    }
+  }
 
   $(document).ready(initApp);
 })();
