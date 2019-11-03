@@ -557,20 +557,21 @@
     constructor() {
       this.type = 'floral';
     }
+
     logItem() {
       console.log(`%c${this.name}`, 'font-weight: bold');
       for (const prop in this) {
         console.log(' ', prop, ': ', this[prop]);
       }
     }
-  };
+  }
 
   class Flower extends Item {
     constructor(quantity, color) {
       super();
       this[color] = quantity;
     }
-  };
+  }
 
   class Live extends Item {
     constructor(name, pot, quantity = 1) {
