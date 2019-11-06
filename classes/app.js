@@ -1,3 +1,16 @@
+const mixin = {
+  madeIn() {
+    console.log('This car was made in year 2019.');
+  },
+};
+
+const carMixin = {
+  __proto__: mixin,
+  madeIn() {
+    super.madeIn();
+  },
+};
+
 sayHi();
 
 class Car {
