@@ -15,14 +15,20 @@ class Car {
     const doors1 = car1.doors;
     const doors2 = car2.doors;
 
-    return door1 + doors2;
+    return doors1 + doors2;
   }
 }
 
 const cx5 = new Car(4, 'V6', 'grey');
+const civic = new Car(3, 'V4', 'blue');
 
 console.log(cx5);
 console.log(cx5.carStats());
+
+console.log(civic);
+console.log(civic.carStats());
+
+console.log(Car.totalDoors(cx5, civic));
 
 function sayHi() {
   console.log('Hello, this function can be called anywhere!');
