@@ -1,13 +1,13 @@
 const mixin = {
   madeIn() {
-    console.log('This car was made in year 2019.');
+    return 'This car was made in year 2019.';
   },
 };
 
 const carMixin = {
   __proto__: mixin,
   madeIn() {
-    super.madeIn();
+    return super.madeIn();
   },
 };
 
@@ -38,6 +38,9 @@ class SUV extends Car {
     this.brand = brand;
     this.wheels = 4;
     this.ac = true;
+
+    // Assing mixin
+    Object.assign(this, carMixin);
   }
 
   myBrand() {
@@ -51,6 +54,7 @@ const civic = new Car(3, 'V4', 'blue');
 console.log(cx5);
 console.log(cx5.carStats());
 console.log(cx5.myBrand());
+console.log(cx5.madeIn());
 
 console.log(civic);
 console.log(civic.carStats());
