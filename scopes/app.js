@@ -1,6 +1,6 @@
 console.log('Hello Scopes!');
 
-var warrior = 'Ninja';
+warrior = 'Ninja';
 
 const screamWarrior = () => {
     let warrior2 = 'Samurai';
@@ -12,4 +12,7 @@ const screamWarrior = () => {
 const newWarrior = screamWarrior();
 newWarrior.shootWarrior();
 
-console.log(warrior, warrior2);
+console.log(warrior, warrior3);
+
+var warrior;
+var warrior3 = 'Viking';
