@@ -1,24 +1,18 @@
-const warriors = [
-  {
-    name: 'Jujin Take',
-    type: 'Ninja',
-    weapon: 'Shuriken',
-    agility: 79,
-  },
-  {
-    name: 'Viggo Rusen',
-    type: 'Viking',
-    weapon: 'Swing blade',
-    agility: 60,
-  },
-  {
-    name: 'Ro Rake',
-    type: 'Samurai',
-    weapon: 'Boken',
-    agility: 82,
-  },
-];
+const screamWarrior1 = () => {
+  const warrior1 = 'Ninja';
+  const warrior2 = 'Samurai';
 
-const listWarriors = () => console.log(warriors);
+  return `Our warriors are ${warrior1} and ${warrior2}`;
+};
 
-listWarriors();
+const screamWarrior2 = () => {
+  const warrior1 = 'Viking';
+  const warrior2 = 'Soldier';
+
+  return `Our warriors are ${warrior1} and ${warrior2}`;
+};
+
+console.log(screamWarrior1());
+console.log(screamWarrior2());
+
+console.log(warrior1, warrior2);
