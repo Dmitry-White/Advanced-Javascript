@@ -1,18 +1,30 @@
-let warrior1 = 'Ninja';
-const warrior2 = 'Viking';
-console.log(warrior1, warrior2);
-
-warrior1 = 'Samurai';
-console.log(warrior1, warrior2);
+const warriors = [
+  {
+    name: 'Jujin Take',
+    type: 'Ninja',
+    weapon: 'Shuriken',
+    agility: 79,
+  },
+  {
+    name: 'Viggo Rusen',
+    type: 'Viking',
+    weapon: 'Swing blade',
+    agility: 60,
+  },
+  {
+    name: 'Ro Rake',
+    type: 'Samurai',
+    weapon: 'Boken',
+    agility: 82,
+  },
+];
 
 const screamWarrior = () => {
-  const warrior4 = 'Canon shooter';
-  if (warrior2 === 'Viking') {
-    console.log(`Our army consists of ${warrior1}, ${warrior2} and ${warrior4}`);
-  }
-  console.log(warrior4);
+  console.log(warriors);
+  warriors.map((warrior) => {
+    const { name, type, agility } = warrior;
+    console.log(`${name}, who is a ${type}, has an agility of ${agility}`);
+  });
 };
 
 screamWarrior();
-
-console.log(warrior4);
