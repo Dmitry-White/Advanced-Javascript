@@ -21,7 +21,7 @@ const warriors = [
 
 const screamWarrior = () => {
   console.log(warriors);
-  warriors.map((warrior) => {
+  warriors.forEach((warrior) => {
     const { name, type, agility } = warrior;
     console.log(`${name}, who is a ${type}, has an agility of ${agility}`);
   });
