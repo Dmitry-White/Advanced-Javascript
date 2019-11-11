@@ -44,60 +44,19 @@
   const forecastButton = document.querySelector('.forecast-button');
   const resultsBlock = document.querySelector('.results');
 
-  function getSearchUrl(location) {
+  const getSearchUrl = (location) => {
     const cityQuery = `${apiCityParameter}${location}`;
     const searchUrl = `${apiUrl}${apiDataCollection}?${cityQuery}&${apiAuthorization}`;
     return searchUrl;
-  }
+  };
 
-  function getIconUrl(icon) {
-    const iconUrl = `${env.SERVICE_URL}${serviceImgCollection}${icon}.png`;
-    return iconUrl;
-  }
+  const getIconUrl = (icon) => `${env.SERVICE_URL}${serviceImgCollection}${icon}.png`;
 
-  function getCelcius(tempKelvin) {
-    return tempKelvin - 273.15;
-  }
+  const getCelcius = (tempKelvin) => tempKelvin - 273.15;
 
-  function getFahrenheit(tempKelvin) {
-    return getCelcius(tempKelvin) * 1.8 + 32;
-  }
+  const getFahrenheit = (tempKelvin) => getCelcius(tempKelvin) * 1.8 + 32;
 
-  forecastButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const location = locationBlock.value;
-    const searchUrl = getSearchUrl(location);
-
-    fetch(searchUrl)
-      .then((res) => res.json())
-      .then((response) => updateUISuccess(response))
-      .catch(() => updateUIFailure());
-
-    locationBlock.value = '';
-  }, false);
-
-  optionsBlock.forEach((el) => el.addEventListener('click', updateActivityList, false));
-
-  function updateUISuccess(response) {
-    const { main: { temp }, weather, name } = response;
-    const { main, icon } = weather[0];
-
-    const tempCelcius = getCelcius(temp);
-    const tempFahrenheit = getFahrenheit(temp);
-
-    state = {
-      condition: main,
-      icon: getIconUrl(icon),
-      celcius: Math.floor(tempCelcius),
-      fahrenheit: Math.floor(tempFahrenheit),
-      city: name,
-    };
-
-    drawForecast();
-    updateActivityList();
-  }
-
-  function drawForecast() {
+  const drawForecast = () => {
     const {
       city, celcius, fahrenheit, icon, condition,
     } = state;
@@ -125,9 +84,9 @@
     } else {
       conditionsBlock.appendChild(container);
     }
-  }
+  };
 
-  function drawActivities() {
+  const drawActivities = () => {
     const { activities } = state;
 
     const container = document.createElement('div');
@@ -147,9 +106,20 @@
     } else {
       activitiesBlock.appendChild(container);
     }
-  }
+  };
 
-  function updateActivityList(event) {
+  const updateState = (type) => {
+    if (currentCategory === CATEGORIES.SOLO) {
+      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+    } else if (currentCategory === CATEGORIES.TEAM) {
+      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+    } else {
+      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+    }
+  };
+
+  const updateActivityList = (event) => {
     const { condition, fahrenheit } = state;
 
     state.activities = [];
@@ -175,20 +145,43 @@
     drawActivities();
 
     resultsBlock.classList.add('open');
-  }
+  };
 
-  function updateState(type) {
-    if (currentCategory === CATEGORIES.SOLO) {
-      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-    } else if (currentCategory === CATEGORIES.TEAM) {
-      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-    } else {
-      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-    }
-  }
+  const updateUISuccess = (response) => {
+    const { main: { temp }, weather, name } = response;
+    const { main, icon } = weather[0];
 
-  function updateUIFailure() {
-    conditionsBlock.textContent = apiErrorMessage;
-  }
+    const tempCelcius = getCelcius(temp);
+    const tempFahrenheit = getFahrenheit(temp);
+
+    state = {
+      condition: main,
+      icon: getIconUrl(icon),
+      celcius: Math.floor(tempCelcius),
+      fahrenheit: Math.floor(tempFahrenheit),
+      city: name,
+    };
+
+    drawForecast();
+    updateActivityList();
+  };
+
+  const updateUIFailure = () => conditionsBlock.textContent = apiErrorMessage;
+
+  forecastButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const location = locationBlock.value;
+    const searchUrl = getSearchUrl(location);
+
+    fetch(searchUrl)
+      .then((res) => res.json())
+      .then((response) => updateUISuccess(response))
+      .catch(() => updateUIFailure());
+
+    locationBlock.value = '';
+  }, false);
+
+  optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
+    updateActivityList(e);
+  }, false));
 }());
