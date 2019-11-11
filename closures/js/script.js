@@ -36,6 +36,7 @@
 
   let state = {};
   let currentCategory = CATEGORIES.ALL;
+  const clicks = {};
 
   const optionsBlock = document.querySelectorAll('.options div');
   const activitiesBlock = document.querySelector('.activities');
@@ -147,6 +148,12 @@
     resultsBlock.classList.add('open');
   };
 
+  const updateClicks = (menu) => {
+    const button = menu.id;
+    clicks[button] = clicks[button] + 1 || 1;
+    console.log(clicks);
+  };
+
   const updateUISuccess = (response) => {
     const { main: { temp }, weather, name } = response;
     const { main, icon } = weather[0];
@@ -183,5 +190,6 @@
 
   optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
     updateActivityList(e);
+    updateClicks(e.target);
   }, false));
 }());
