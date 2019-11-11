@@ -151,7 +151,11 @@
   const updateClicks = (menu) => {
     const button = menu.id;
     clicks[button] = clicks[button] + 1 || 1;
-    console.log(clicks);
+    const reportClicks = () => {
+      const report = [button, clicks];
+      console.log(...report);
+    };
+    reportClicks();
   };
 
   const updateUISuccess = (response) => {
