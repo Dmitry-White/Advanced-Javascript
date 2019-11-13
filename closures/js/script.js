@@ -36,7 +36,6 @@
 
   let state = {};
   let currentCategory = CATEGORIES.ALL;
-  const clicks = {};
 
   const optionsBlock = document.querySelectorAll('.options div');
   const activitiesBlock = document.querySelector('.activities');
@@ -148,14 +147,15 @@
     resultsBlock.classList.add('open');
   };
 
-  const updateClicks = (menu) => {
-    const button = menu.id;
-    clicks[button] = clicks[button] + 1 || 1;
-    const reportClicks = () => {
-      const report = [button, clicks];
-      console.log(...report);
+  const updateClicks = () => {
+    let button;
+    const clicks = {};
+    const reportClicks = (menu) => {
+      button = menu.id;
+      clicks[button] = clicks[button] + 1 || 1;
+      console.log(button, clicks);
     };
-    reportClicks();
+    return reportClicks;
   };
 
   const updateUISuccess = (response) => {
@@ -179,6 +179,8 @@
 
   const updateUIFailure = () => conditionsBlock.textContent = apiErrorMessage;
 
+  const reportClicks = updateClicks();
+
   forecastButton.addEventListener('click', (e) => {
     e.preventDefault();
     const location = locationBlock.value;
@@ -194,6 +196,6 @@
 
   optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
     updateActivityList(e);
-    updateClicks(e.target);
+    reportClicks(e.target);
   }, false));
 }());
