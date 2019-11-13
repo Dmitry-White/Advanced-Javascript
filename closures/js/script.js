@@ -7,6 +7,7 @@
   const apiCityParameter = 'q=';
   const apiDataCollection = 'weather';
   const apiAuthorization = `${apiAuthParameter}${apiKey}`;
+  const serviceUrl = env.SERVICE_URL;
   const serviceImgCollection = 'img/w/';
 
   const ACTIVITIES = {
@@ -51,7 +52,7 @@
     return searchUrl;
   };
 
-  const getIconUrl = (icon) => `${env.SERVICE_URL}${serviceImgCollection}${icon}.png`;
+  const getIconUrl = (icon) => `${serviceUrl}${serviceImgCollection}${icon}.png`;
 
   const getCelcius = (tempKelvin) => tempKelvin - 273.15;
 
@@ -148,15 +149,6 @@
     resultsBlock.classList.add('open');
   };
 
-  const updateClicks = () => {
-    const clicks = {};
-    const reportClicks = (item) => {
-      clicks[item] = clicks[item] + 1 || 1;
-      console.log(item, clicks);
-    };
-    return reportClicks;
-  };
-
   const updateUISuccess = (response) => {
     const { main: { temp }, weather, name } = response;
     const { main, icon } = weather[0];
@@ -178,7 +170,17 @@
 
   const updateUIFailure = () => conditionsBlock.textContent = apiErrorMessage;
 
-  const reportClicks = updateClicks();
+  const createReport = () => {
+    const clicks = {};
+    const reportAction = (item) => {
+      clicks[item] = clicks[item] + 1 || 1;
+      console.log(item, clicks);
+    };
+    return reportAction;
+  };
+
+  const reportActivities = createReport();
+  const reportProducts = createReport();
 
   forecastButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -195,10 +197,10 @@
 
   optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
     updateActivityList(e);
-    reportClicks(e.target.id);
+    reportActivities(e.target.id);
   }, false));
 
   productImages.forEach((el) => el.addEventListener('mouseenter', (e) => {
-    reportClicks(e.target.nextElementSibling.textContent);
+    reportProducts(e.target.nextElementSibling.textContent);
   }, false));
 }());
