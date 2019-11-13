@@ -1,4 +1,4 @@
-const reports = (() => {
+const Reports = (() => {
   const createReport = () => {
     const clicks = {};
     const reportAction = (item) => {
@@ -7,8 +7,8 @@ const reports = (() => {
     };
     return reportAction;
   };
-  
+
   return {
     createReport,
-  }
+  };
 })();
