@@ -170,17 +170,8 @@
 
   const updateUIFailure = () => conditionsBlock.textContent = apiErrorMessage;
 
-  const createReport = () => {
-    const clicks = {};
-    const reportAction = (item) => {
-      clicks[item] = clicks[item] + 1 || 1;
-      console.log(item, clicks);
-    };
-    return reportAction;
-  };
-
-  const reportActivities = createReport();
-  const reportProducts = createReport();
+  const reportActivities = reports.createReport();
+  const reportProducts = reports.createReport();
 
   forecastButton.addEventListener('click', (e) => {
     e.preventDefault();
