@@ -43,6 +43,7 @@
   const locationBlock = document.querySelector('#location');
   const forecastButton = document.querySelector('.forecast-button');
   const resultsBlock = document.querySelector('.results');
+  const productImages = document.querySelectorAll('.product-image');
 
   const getSearchUrl = (location) => {
     const cityQuery = `${apiCityParameter}${location}`;
@@ -148,12 +149,10 @@
   };
 
   const updateClicks = () => {
-    let button;
     const clicks = {};
-    const reportClicks = (menu) => {
-      button = menu.id;
-      clicks[button] = clicks[button] + 1 || 1;
-      console.log(button, clicks);
+    const reportClicks = (item) => {
+      clicks[item] = clicks[item] + 1 || 1;
+      console.log(item, clicks);
     };
     return reportClicks;
   };
@@ -196,6 +195,10 @@
 
   optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
     updateActivityList(e);
-    reportClicks(e.target);
+    reportClicks(e.target.id);
+  }, false));
+
+  productImages.forEach((el) => el.addEventListener('mouseenter', (e) => {
+    reportClicks(e.target.nextElementSibling.textContent);
   }, false));
 }());
