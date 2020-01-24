@@ -1,10 +1,10 @@
-function *foo_es6(url) {
+function* foo_es6(url) {
   try {
-    console.log("Requesting: ", url);
+    console.log('Requesting: ', url);
     const value = yield fetch(url);
-    console.log("Value: ", value);
+    console.log('Value: ', value);
   } catch (error) {
-    console.log("Oops: ", error);
+    console.log('Oops: ', error);
     return false;
   }
 }
