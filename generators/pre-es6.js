@@ -29,6 +29,34 @@ console.log(it.next());
 
 // Function needs to return a generator
 function foo_pre(url) {
+  // Generator state
+  var state;
+
+  // Generator-wide variable declaration
+  var sharedValue;
+
+  // Handle each state
+  function process(value) {
+    switch (state) {
+      case 1:
+        // STATE 1
+        // Initial state
+        console.log('Requesting: ', url);
+        return fetch(url);    
+      case 2:
+        // STATE 2
+        // Success state
+        sharedValue = value
+        console.log('Value: ', sharedValue);
+        return;
+      case 3:
+        // STATE 3
+        // Failure state
+        var error = value;
+        console.log('Oops: ', error);
+        return false;
+    }
+  }
 
   // Make and return a generator
   return {
