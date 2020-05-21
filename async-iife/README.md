@@ -1,5 +1,5 @@
 We're building iTunes in a browser.
-We need to write the code for importing .mp3 files into our musi library.
+We need to write the code for importing .mp3 files into our music library.
 User can import by drag-&-droping their .mp3 files onto an application window.
 
 There're 5 steps to import a song:
