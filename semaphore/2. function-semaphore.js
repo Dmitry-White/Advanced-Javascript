@@ -45,6 +45,7 @@ const Semaphore = (max) => {
 };
 
 // Usage
+const importMP3 = async (file) => {/* ... */}
 
 const semaphore = Semaphore(4);
 const result = await semaphore(
