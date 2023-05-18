@@ -1,6 +1,4 @@
-# Advanced-Javascript
-
-Exploring and reinforcing my comprehension of advanced Javascript concepts
+# Advanced Javascript
 
 1. [JavaScript: Classes](https://www.linkedin.com/learning/javascript-classes-2018)
 
@@ -25,15 +23,15 @@ Exploring and reinforcing my comprehension of advanced Javascript concepts
    [JavaScript Reflection](https://www.javascripttutorial.net/es6/javascript-reflection/)
 
    [Working with the JavaScript Reflect API](https://blog.logrocket.com/working-with-the-javascript-reflect-api/)
-   
+
    [Proxy and Reflect](https://javascript.info/proxy)
 
 9. [JavaScript: Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
-   
+
    [JavaScript Proxy](https://www.javascripttutorial.net/es6/javascript-proxy/)
-   
+
    [How JavaScript's Proxy Object Works](https://www.freecodecamp.org/news/javascript-proxy-object/)
-   
+
    [Metaprogramming in JavaScript](https://www.freecodecamp.org/news/what-is-metaprogramming-in-javascript-in-english-please/)
 
    [Proxy and Reflect](https://javascript.info/proxy)

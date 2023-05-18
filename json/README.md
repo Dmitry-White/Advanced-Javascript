@@ -1,1 +1,1 @@
-# Everything-JSON
+# Everything JSON
