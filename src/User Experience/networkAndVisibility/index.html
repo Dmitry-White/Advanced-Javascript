@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Network status and Page Visibility</title>
+    <link rel="stylesheet" href="../../../common.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <section>
+        <h1>Online / Offline Example</h1>
+        <div id="content">
+            <p>Web applications can detect the state of the network before attempting
+                to access data and update their UX appropriately, as well as determine the quality and speed of the
+                connection.</p>
+            <p>In this sample, the status box below will turn either green for online or red for offline.</p>
+            <p>Where available, it will also use the <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API">
+                    Network Information API</a> to indicate the effective type of the
+                connection as well as the estimated round-trip time for messages.
+            </p>
+            <div id="netState">The network state is being detected...</div>
+        </div>
+    </section>
+    <section>
+        <h1>Page Visibility Example</h1>
+        <div id="content">
+            <p>The PageVisibility API enables web apps to respond to changes in the visible state of the tab that they
+                are running in. This is useful for a variety of scenarios:</p>
+            <p>
+                <ul>
+                    <li>Pause and play video or audio content</li>
+                    <li>Slow down or pause network access when a tab is not visible</li>
+                    <li>Freeze the state of a game or other live content</li>
+                    <li>Only show notifications when the app is not visible</li>
+                </ul>
+            </p>
+            <p>
+                This <code>div</code> element will update when the visibilitychange event fires in the tab:
+            </p>
+            <div id="targetElem">
+                <!-- visibility change events will be recorded here -->
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+
+</html>

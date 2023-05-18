@@ -1,0 +1,11 @@
+#targetElem {
+  width: 500px;
+  height: 300px;
+  border: 1px solid gray;
+
+  /* Use the paint API to paint the background of the box */
+  background-image: paint(painter);
+  /* Define some custom properties to use in the paint function */
+  --cross-thickness: 2;
+  --cross-color: red;
+}

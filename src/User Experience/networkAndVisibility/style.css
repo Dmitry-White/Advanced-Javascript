@@ -1,0 +1,26 @@
+#netState {
+  width: 600px;
+  min-height: 2em;
+  border: 1px solid gray;
+  padding: 15pt;
+  text-align: center;
+  font-size: 24pt;
+  line-height: 1.2em;
+}
+
+.onlineState {
+  background-color: green;
+  color: white;
+}
+
+.offlineState {
+  background-color: red;
+  color: white;
+}
+
+#targetElem {
+  overflow-y: scroll;
+  width: 500px;
+  height: 300px;
+  border: 1px solid gray;
+}
