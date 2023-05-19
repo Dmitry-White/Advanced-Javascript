@@ -1,4 +1,4 @@
-# Advanced Javascript
+# Advanced JavaScript
 
 1. [JavaScript: Classes](https://www.linkedin.com/learning/javascript-classes-2018)
 
