@@ -31,10 +31,10 @@ console.log('--------------------------------');
 // Function needs to return a generator
 function foo_pre(url) {
   // Generator state
-  var state;
+  let state;
 
   // Generator-wide variable declaration
-  var sharedValue;
+  let sharedValue;
 
   // Handle each state
   function handleState(value) {
@@ -61,46 +61,47 @@ function foo_pre(url) {
 
   // Make and return a generator
   return {
-    next: function (value) {
+    next(value) {
       if (!state) {
         // STATE 1
         // Initial state
         state = 1;
         return {
           done: false,
-          value: handleState()
-        }
-      } else if (state === 1) {
+          value: handleState(),
+        };
+      }
+      if (state === 1) {
         // STATE 2
         // Success state
         state = 2;
         return {
           done: true,
-          value: handleState(value)
-        }
-      };
+          value: handleState(value),
+        };
+      }
 
       // Generator completed
       return {
         done: true,
-        value: undefined
-      }
+        value: undefined,
+      };
     },
-    throw: function (error) {
+    throw(error) {
       if (state === 1) {
         // STATE 3
         // Failure state
         state = 3;
         return {
           done: true,
-          value: handleState(error)
-        }
+          value: handleState(error),
+        };
       }
 
       // Case for error NOT during the request
       throw error;
-    }
-  }
+    },
+  };
 }
 
 console.log('------- Pre-ES6 Generator ------');

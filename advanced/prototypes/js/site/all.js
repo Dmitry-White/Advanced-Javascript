@@ -47,15 +47,18 @@
           })
           .blur(function () {
             const input = $(this);
-            if (input.val() == '' || input.val() == input.attr(pl)) input.addClass(pl).val(input.attr(pl));
+            if (input.val() == '' || input.val() == input.attr(pl))
+              input.addClass(pl).val(input.attr(pl));
           })
           .blur();
 
         $placeholder.parents('form').on('submit', function () {
-          $(this).find(`[${pl}]`).each(function () {
-            const $input = $(this);
-            if ($input.val() == $input.attr(pl)) $input.val('');
-          });
+          $(this)
+            .find(`[${pl}]`)
+            .each(function () {
+              const $input = $(this);
+              if ($input.val() == $input.attr(pl)) $input.val('');
+            });
         });
       }
       $html.addClass(pl);
@@ -78,13 +81,18 @@
             let nav = true;
             let pager = true;
 
-            if (!supports.touch && parseInt($this.data('interval'))) interval = parseInt($this.data('interval') * 1000);
+            if (!supports.touch && parseInt($this.data('interval')))
+              interval = parseInt($this.data('interval') * 1000);
 
             if ($this.data('nav') === false) {
               nav = false;
             } else {
-              var $navPrev = $('<a href="#previous" class="nav prev"><span>Previous</span></a>');
-              var $navNext = $('<a href="#next" class="nav next"><span>Next</span></a>');
+              var $navPrev = $(
+                '<a href="#previous" class="nav prev"><span>Previous</span></a>',
+              );
+              var $navNext = $(
+                '<a href="#next" class="nav next"><span>Next</span></a>',
+              );
             }
 
             if ($this.data('pager') === false) pager = false;
@@ -96,7 +104,10 @@
 
             $this.addClass('multiple');
 
-            if (Modernizr.csstransforms && !(layoutEngine.vendor === 'ie' && layoutEngine.version === 9)) {
+            if (
+              Modernizr.csstransforms &&
+              !(layoutEngine.vendor === 'ie' && layoutEngine.version === 9)
+            ) {
               if (pager) {
                 for (let i = 1; i <= slidesCount; i++) {
                   li += `<li><a href="#slide-${i}">Slide ${i}</a></li>`;
@@ -118,7 +129,8 @@
                     $navPagerLi.filter(`:eq(${pos})`).addClass(current);
                   }
 
-                  if (!interval) trackEvent('Website', 'Carousel', `Slide ${pos + 1}`);
+                  if (!interval)
+                    trackEvent('Website', 'Carousel', `Slide ${pos + 1}`);
                 },
               });
 
@@ -177,7 +189,8 @@
                   },
                   (e) => {
                     e.stopPropagation();
-                    if (interval) timer = window.setInterval(carousel, interval);
+                    if (interval)
+                      timer = window.setInterval(carousel, interval);
                   },
                 );
               }
@@ -207,7 +220,8 @@
               if (pager) {
                 $navPager.attr('id', `nav_pager-${index}`);
                 cycleOpts.pager = `#nav_pager-${index}`;
-                cycleOpts.pagerAnchorBuilder = (idx, slide) => `<li><a href="#slide-${idx + 1}">Slide ${idx + 1}</a></li>`;
+                cycleOpts.pagerAnchorBuilder = (idx, slide) =>
+                  `<li><a href="#slide-${idx + 1}">Slide ${idx + 1}</a></li>`;
               }
 
               $feature.attr('style', w);
@@ -245,7 +259,8 @@
       if ($summaryItems.length) {
         $summaryItems.each(function () {
           const $this = $(this);
-          summaryTotal += (parseInt($this.data('qty')) * parseFloat($this.data('price')));
+          summaryTotal +=
+            parseInt($this.data('qty')) * parseFloat($this.data('price'));
         });
         summaryTotal = summaryTotal.toFixed(2);
 
@@ -288,7 +303,8 @@
         return false;
       });
 
-      if (!$.cookie('basket') && !izilla_gup.miniBasket) $('#basket_empty').removeClass(hidden);
+      if (!$.cookie('basket') && !izilla_gup.miniBasket)
+        $('#basket_empty').removeClass(hidden);
       else basket.calculate();
 
       if (izilla_gup.clearBasket) {
@@ -311,14 +327,15 @@
         over: () => {
           if (!$miniBasket.hasClass('empty')) {
             if ($.cookie('qty')) {
-              if (parseInt($.cookie('qty')) === 1) $('.drawer_item').eq(0).removeClass(hidden);
+              if (parseInt($.cookie('qty')) === 1)
+                $('.drawer_item').eq(0).removeClass(hidden);
               else $('.drawer_item').removeClass(hidden);
 
               $basketDrawer.slideDown();
             }
           }
         },
-        out: () => { },
+        out: () => {},
       });
     },
     calculate: (post) => {
@@ -335,18 +352,15 @@
         window.qtyVar = query.match(/qty=(\d+)/);
         try {
           window.qtyVar = window.qtyVar[1];
-        } catch (e) {
-        }
+        } catch (e) {}
         window.totalVar = query.match(/total=(\d+(?:.?\d+)?)/);
         try {
           window.totalVar = window.totalVar[1];
-        } catch (e) {
-        }
+        } catch (e) {}
         window.shippingVar = query.match(/shipping=(\d+(?:.?\d+)?)/);
         try {
           window.shippingVar = window.shippingVar[1];
-        } catch (e) {
-        }
+        } catch (e) {}
       }
 
       if (window.qtyVar) {
@@ -362,7 +376,8 @@
       $miniQty.html($.cookie('qty'));
       $miniBasket.removeClass('empty');
 
-      if (window.shippingVar) window.shippingVar = parseFloat(window.shippingVar);
+      if (window.shippingVar)
+        window.shippingVar = parseFloat(window.shippingVar);
 
       $.cookie('shipping', window.shippingVar);
       shipping = $.cookie('shipping');
@@ -410,9 +425,17 @@
       console.log(dataObject);
 
       if (dataObject.category === 'arrangement') {
-        newItem = new Arrangement(dataObject.itemname, dataObject.vasetype, dataObject.qty);
+        newItem = new Arrangement(
+          dataObject.itemname,
+          dataObject.vasetype,
+          dataObject.qty,
+        );
       } else if (dataObject.category === 'live') {
-        newItem = new Live(dataObject.itemname, dataObject.pottype, dataObject.qty);
+        newItem = new Live(
+          dataObject.itemname,
+          dataObject.pottype,
+          dataObject.qty,
+        );
       } else if (dataObject.category === 'bouquet') {
         if ($.cookie('bouquetCount')) {
           $.cookie('bouquetCount', parseInt($.cookie('bouquetCount')) + 1);
@@ -429,10 +452,16 @@
             const legend = $(`#${item}`).parent().parent().data('legend');
             const key = legend.replace(/\s/g, '');
             // if item requires a color selection and one has been specified
-            if (['CL', 'GD', 'R', 'L', 'T'].includes(stemType)
-              && dataObject[`color${stemType}`] !== '---') {
+            if (
+              ['CL', 'GD', 'R', 'L', 'T'].includes(stemType) &&
+              dataObject[`color${stemType}`] !== '---'
+            ) {
               // add new item, specifying name, quantity, and color
-              newItem.flowers.addStem(key, dataObject[item], dataObject[`color${stemType}`]);
+              newItem.flowers.addStem(
+                key,
+                dataObject[item],
+                dataObject[`color${stemType}`],
+              );
             } else {
               // add new item specifying only name and quantity
               newItem.flowers.addStem(key, dataObject[item]);
@@ -459,12 +488,16 @@
 
       window.qtyVar += parseInt($this.find('input[name="qty"]').val());
 
-      window.shippingVar = parseFloat($this.find('input[name="shipping"]').val());
+      window.shippingVar = parseFloat(
+        $this.find('input[name="shipping"]').val(),
+      );
 
       if ($.cookie('total')) window.totalVar = parseFloat($.cookie('total'));
       else window.totalVar = 0;
 
-      window.totalVar += (parseInt($this.find('input[name="qty"]').val()) * parseFloat($this.find('input[name="unitprice"]').val()));
+      window.totalVar +=
+        parseInt($this.find('input[name="qty"]').val()) *
+        parseFloat($this.find('input[name="unitprice"]').val());
       basket.calculate(true);
     },
   };
@@ -495,12 +528,16 @@
           opacity: 0.7,
           onComplete: () => {
             if (!hasrun) {
-              $cboxContent.prepend('<span id="cboxPreviousDisabled" /><span id="cboxNextDisabled" /><a href="#previous" id="cboxPreviousLink">Previous</a><a href="#next" id="cboxNextLink">Next</a>');
+              $cboxContent.prepend(
+                '<span id="cboxPreviousDisabled" /><span id="cboxNextDisabled" /><a href="#previous" id="cboxPreviousLink">Previous</a><a href="#next" id="cboxNextLink">Next</a>',
+              );
               hasrun = true;
             }
             $('#cboxPreviousLink, #cboxNextLink').removeClass(disabled);
-            if (currentLightbox === 1) $('#cboxPreviousLink').addClass(disabled);
-            if (currentLightbox === totalLightboxes) $('#cboxNextLink').addClass(disabled);
+            if (currentLightbox === 1)
+              $('#cboxPreviousLink').addClass(disabled);
+            if (currentLightbox === totalLightboxes)
+              $('#cboxNextLink').addClass(disabled);
           },
           onClosed: () => {
             currentLightbox = 0;
@@ -515,14 +552,17 @@
 
       $('#cboxContent').on('click', '#cboxPrevious', (e) => {
         currentLightbox--;
-        if (currentLightbox < totalLightboxes) $('#cboxPreviousLink, #cboxNextLink').removeClass(disabled);
+        if (currentLightbox < totalLightboxes)
+          $('#cboxPreviousLink, #cboxNextLink').removeClass(disabled);
         if (currentLightbox === 1) $('#cboxPreviousLink').addClass(disabled);
       });
 
       $('#cboxContent').on('click', '#cboxNext', (e) => {
         currentLightbox++;
-        if (currentLightbox > 1) $('#cboxPreviousLink, #cboxNextLink').removeClass(disabled);
-        if (currentLightbox === totalLightboxes) $('#cboxNextLink').addClass(disabled);
+        if (currentLightbox > 1)
+          $('#cboxPreviousLink, #cboxNextLink').removeClass(disabled);
+        if (currentLightbox === totalLightboxes)
+          $('#cboxNextLink').addClass(disabled);
       });
 
       $('#cboxContent').on('click', '#cboxPreviousLink', (e) => {
@@ -541,9 +581,11 @@
   const initApp = () => {
     $html.addClass('jquery');
 
-    if (layoutEngine.vendor === 'mozilla' && cssua.ua.desktop === 'windows') Modernizr.load('/js/vendor/jquery.firefox.hwa.min.js');
+    if (layoutEngine.vendor === 'mozilla' && cssua.ua.desktop === 'windows')
+      Modernizr.load('/js/vendor/jquery.firefox.hwa.min.js');
 
-    if (layoutEngine.vendor === 'webkit' && cssua.ua.ios) $('label').attr('onclick', '');
+    if (layoutEngine.vendor === 'webkit' && cssua.ua.ios)
+      $('label').attr('onclick', '');
 
     placeholder.init();
     slider.init();

@@ -11,11 +11,25 @@ const ActivityWidget = (() => {
 
   const ACTIVITIES = {
     teamIn: ['basketball', 'hockey', 'volleyball'],
-    teamOutWarm: ['softball/baseball', 'football/soccer', 'American football', 'rowing', 'tennis', 'volleyball', 'ultimate frisbee', 'rugby'],
+    teamOutWarm: [
+      'softball/baseball',
+      'football/soccer',
+      'American football',
+      'rowing',
+      'tennis',
+      'volleyball',
+      'ultimate frisbee',
+      'rugby',
+    ],
     teamOutCold: ['hockey'],
     soloIn: ['rock climbing', 'swimming', 'ice skating'],
     soloOutWarm: ['rowing', 'running', 'hiking', 'cycling', 'rock climbing'],
-    soloOutCold: ['snowshoeing', 'downhill skiing', 'cross-country skiing', 'ice skating'],
+    soloOutCold: [
+      'snowshoeing',
+      'downhill skiing',
+      'cross-country skiing',
+      'ice skating',
+    ],
   };
   const CONDITIONS = {
     RAIN: 'Rain',
@@ -42,7 +56,7 @@ const ActivityWidget = (() => {
   let currentCategory = CATEGORIES.ALL;
   let wrapperBlock;
 
-  const attachWidget = (wrapper) => wrapperBlock = wrapper;
+  const attachWidget = (wrapper) => (wrapperBlock = wrapper);
 
   const getSearchUrl = (location) => {
     const cityQuery = `${apiCityParameter}${location}`;
@@ -50,16 +64,15 @@ const ActivityWidget = (() => {
     return searchUrl;
   };
 
-  const getIconUrl = (icon) => `${serviceUrl}${serviceImgCollection}${icon}.png`;
+  const getIconUrl = (icon) =>
+    `${serviceUrl}${serviceImgCollection}${icon}.png`;
 
   const getCelcius = (tempKelvin) => tempKelvin - 273.15;
 
   const getFahrenheit = (tempKelvin) => getCelcius(tempKelvin) * 1.8 + 32;
 
   const drawForecast = () => {
-    const {
-      city, celcius, fahrenheit, icon, condition,
-    } = state;
+    const { city, celcius, fahrenheit, icon, condition } = state;
 
     const container = document.createElement('div');
     const cityParagraph = document.createElement('p');
@@ -126,7 +139,8 @@ const ActivityWidget = (() => {
 
     if (event !== undefined && event.target.classList.contains('selected')) {
       return true;
-    } if (event !== undefined && !event.target.classList.contains('selected')) {
+    }
+    if (event !== undefined && !event.target.classList.contains('selected')) {
       currentCategory = event.target.id;
 
       wrapperBlock.forEach((tab) => tab.classList.remove('selected'));
@@ -148,7 +162,11 @@ const ActivityWidget = (() => {
   };
 
   const updateUISuccess = (response) => {
-    const { main: { temp }, weather, name } = response;
+    const {
+      main: { temp },
+      weather,
+      name,
+    } = response;
     const { main, icon } = weather[0];
 
     const tempCelcius = getCelcius(temp);
@@ -166,7 +184,7 @@ const ActivityWidget = (() => {
     updateActivityList();
   };
 
-  const updateUIFailure = () => conditionsBlock.textContent = apiErrorMessage;
+  const updateUIFailure = () => (conditionsBlock.textContent = apiErrorMessage);
 
   return {
     attachWidget,

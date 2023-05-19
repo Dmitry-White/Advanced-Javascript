@@ -1,4 +1,3 @@
-
 (function () {
   const { createReport } = Reports;
   const {
@@ -19,25 +18,41 @@
 
   attachWidget(optionsBlock);
 
-  forecastButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const location = locationBlock.value;
-    const searchUrl = getSearchUrl(location);
+  forecastButton.addEventListener(
+    'click',
+    (e) => {
+      e.preventDefault();
+      const location = locationBlock.value;
+      const searchUrl = getSearchUrl(location);
 
-    fetch(searchUrl)
-      .then((res) => res.json())
-      .then((response) => updateUISuccess(response))
-      .catch(() => updateUIFailure());
+      fetch(searchUrl)
+        .then((res) => res.json())
+        .then((response) => updateUISuccess(response))
+        .catch(() => updateUIFailure());
 
-    locationBlock.value = '';
-  }, false);
+      locationBlock.value = '';
+    },
+    false,
+  );
 
-  optionsBlock.forEach((el) => el.addEventListener('click', (e) => {
-    updateActivityList(e);
-    reportActivities(e.target.id);
-  }, false));
+  optionsBlock.forEach((el) =>
+    el.addEventListener(
+      'click',
+      (e) => {
+        updateActivityList(e);
+        reportActivities(e.target.id);
+      },
+      false,
+    ),
+  );
 
-  productImages.forEach((el) => el.addEventListener('mouseenter', (e) => {
-    reportProducts(e.target.nextElementSibling.textContent);
-  }, false));
-}());
+  productImages.forEach((el) =>
+    el.addEventListener(
+      'mouseenter',
+      (e) => {
+        reportProducts(e.target.nextElementSibling.textContent);
+      },
+      false,
+    ),
+  );
+})();
