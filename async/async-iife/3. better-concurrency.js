@@ -17,7 +17,7 @@ const importHandler = async (file) => {
     const meta = await parser(file);
     const songMeta = mapSongMeta(file);
     const albumMeta = mapAlbumMeta(file);
-    return { meta, songMeta, albumMeta }
+    return { meta, songMeta, albumMeta };
   })();
 
   // Compute the duration task
@@ -45,7 +45,7 @@ const importHandler = async (file) => {
       albumId,
       file,
       duration,
-      meta
+      meta,
     });
     return songId;
   })();

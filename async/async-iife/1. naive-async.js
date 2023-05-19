@@ -26,8 +26,8 @@ const importHandler = async (file) => {
     albumId,
     file,
     duration,
-    meta
+    meta,
   });
 
   return songId;
-}
+};

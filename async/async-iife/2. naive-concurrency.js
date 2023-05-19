@@ -17,7 +17,7 @@ const importHandler = async (file) => {
     await read(file),
 
     // Parse out the ID3 metadata
-    await parser(file)
+    await parser(file),
   ]);
 
   const songMeta = mapSongMeta(meta);
@@ -28,7 +28,7 @@ const importHandler = async (file) => {
     await getDuration(buffer),
 
     // Import the album
-    await importAlbum(albumMeta)
+    await importAlbum(albumMeta),
   ]);
 
   // Import the song
@@ -37,8 +37,8 @@ const importHandler = async (file) => {
     albumId,
     file,
     duration,
-    meta
+    meta,
   });
 
   return songId;
-}
+};

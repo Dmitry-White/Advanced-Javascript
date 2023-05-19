@@ -23,10 +23,10 @@ const Semaphore = (max) => {
   };
 
   const acquire = () => {
-    return new Promise((resolve => {
+    return new Promise((resolve) => {
       tasks.push(resolve);
       setImmediate(dispatch);
-    }));
+    });
   };
 
   hofHandler = async (fn) => {
@@ -40,17 +40,17 @@ const Semaphore = (max) => {
       release();
     }
   };
-  
+
   return hofHandler;
 };
 
 // Usage
-const importMP3 = async (file) => {/* ... */}
+const importMP3 = async (file) => {
+  /* ... */
+};
 
 const semaphore = Semaphore(4);
-const result = await semaphore(
-  async () => {
-    console.log('Acquired!');
-    return await importMP3(file);
-  }
-);
+const result = await semaphore(async () => {
+  console.log('Acquired!');
+  return await importMP3(file);
+});

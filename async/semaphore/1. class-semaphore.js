@@ -19,15 +19,15 @@ class Semaphore {
       this.counter--;
       this.tasks.shift()();
     }
-  }
+  };
   release() {
     this.counter++;
     this.dispatch();
   }
   acquire() {
-    return new Promise((resolve => {
+    return new Promise((resolve) => {
       this.tasks.push(resolve);
       setImmediate(this.dispatch);
-    }));
+    });
   }
 }

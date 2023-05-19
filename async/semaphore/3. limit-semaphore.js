@@ -11,10 +11,12 @@
 const limit = (max, fn) => {
   const semaphore = Semaphore(max);
   return (...args) => semaphore(() => fn(...args));
-}
+};
 
 //  Usage
-const importMP3 = async (file) => { /* ... */ };
+const importMP3 = async (file) => {
+  /* ... */
+};
 
 const limitedImportMP3 = limit(2, importMP3);
 
