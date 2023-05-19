@@ -1,26 +1,26 @@
 :-webkit-full-screen button {
   background-color: green;
-  color: white
+  color: white;
 }
 
 :-moz-full-screen button {
   background-color: green;
-  color: white
+  color: white;
 }
 
 :-ms-fullscreen button {
   background-color: green;
-  color: white
+  color: white;
 }
 
 :full-screen button {
   background-color: green;
-  color: white
+  color: white;
 }
 
 :fullscreen button {
   background-color: green;
-  color: white
+  color: white;
 }
 
 img:-webkit-full-screen {

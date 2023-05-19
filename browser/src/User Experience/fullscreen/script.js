@@ -24,18 +24,28 @@ const exitFullscreen = () => {
 
 const logFullscreenInfo = (message, event) => {
   console.log(message, event);
-  console.log('The current full-screen element is: ',
-    document.fullscreenElement
-    || document.mozFullScreenElement
-    || document.webkitFullscreenElement
-    || document.msFullscreenElement);
+  console.log(
+    'The current full-screen element is: ',
+    document.fullscreenElement ||
+      document.mozFullScreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement,
+  );
 };
 
 // Register event handlers to listen for fullscreen change events
-document.addEventListener('fullscreenchange', (e) => logFullscreenInfo('fullscreenchange event! ', e));
-document.addEventListener('mozfullscreenchange', (e) => logFullscreenInfo('mozfullscreenchange event! ', e));
-document.addEventListener('webkitfullscreenchange', (e) => logFullscreenInfo('webkitfullscreenchange event! ', e));
-document.addEventListener('msfullscreenchange', (e) => logFullscreenInfo('msfullscreenchange event! ', e));
+document.addEventListener('fullscreenchange', (e) =>
+  logFullscreenInfo('fullscreenchange event! ', e),
+);
+document.addEventListener('mozfullscreenchange', (e) =>
+  logFullscreenInfo('mozfullscreenchange event! ', e),
+);
+document.addEventListener('webkitfullscreenchange', (e) =>
+  logFullscreenInfo('webkitfullscreenchange event! ', e),
+);
+document.addEventListener('msfullscreenchange', (e) =>
+  logFullscreenInfo('msfullscreenchange event! ', e),
+);
 
 const init = () => {
   const imageFS = document.getElementById('btnImgFs');

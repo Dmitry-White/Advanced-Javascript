@@ -9,7 +9,8 @@
   const buttonOne = document.querySelector('#btn1');
   const buttonTwo = document.querySelector('#btn2');
 
-  const sendEvent = (strEvent) => navigator.sendBeacon && navigator.sendBeacon(beaconURL, strEvent);
+  const sendEvent = (strEvent) =>
+    navigator.sendBeacon && navigator.sendBeacon(beaconURL, strEvent);
 
   window.addEventListener('load', () => sendEvent(LOAD_MESSAGE));
 

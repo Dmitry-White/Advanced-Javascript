@@ -18,7 +18,8 @@ const init = () => {
   const notificationIcon = document.querySelector('#notIcon');
   const notificationPersist = document.querySelector('#notPersist');
 
-  const isPermissionGranted = () => Notification.permission === PERMISSION_STATUS_GRANTED;
+  const isPermissionGranted = () =>
+    Notification.permission === PERMISSION_STATUS_GRANTED;
   const redirectHandler = (url) => (event) => {
     event.target.close();
     window.location = url;
@@ -29,17 +30,33 @@ const init = () => {
   buttonModal.addEventListener('click', () => dialog.showModal());
 
   // add event listeners for the OK and Cancel buttons
-  buttonOk.addEventListener('click', () => dialog.open && dialog.close(DIALOG_STATUS_OK));
-  buttonCancel.addEventListener('click', () => dialog.open && dialog.close(DIALOG_STATUS_CANCEL));
+  buttonOk.addEventListener(
+    'click',
+    () => dialog.open && dialog.close(DIALOG_STATUS_OK),
+  );
+  buttonCancel.addEventListener(
+    'click',
+    () => dialog.open && dialog.close(DIALOG_STATUS_CANCEL),
+  );
 
   // event listeners for the dialog itself - close and cancel
-  dialog.addEventListener('close', () => console.log('Dialog closed: ', dialog.returnValue));
-  dialog.addEventListener('cancel', () => console.log('Dialog canceled: ', dialog.returnValue));
+  dialog.addEventListener('close', () =>
+    console.log('Dialog closed: ', dialog.returnValue),
+  );
+  dialog.addEventListener('cancel', () =>
+    console.log('Dialog canceled: ', dialog.returnValue),
+  );
 
-  buttonRequest.addEventListener('click', () => Notification.requestPermission()
-    .then((res) => console.log('Permission granted: ', res)));
+  buttonRequest.addEventListener('click', () =>
+    Notification.requestPermission().then((res) =>
+      console.log('Permission granted: ', res),
+    ),
+  );
 
-  buttonShowBasic.addEventListener('click', () => isPermissionGranted() && new Notification('Basic notification'));
+  buttonShowBasic.addEventListener(
+    'click',
+    () => isPermissionGranted() && new Notification('Basic notification'),
+  );
 
   buttonShowCustom.addEventListener('click', () => {
     if (isPermissionGranted()) {
@@ -60,7 +77,10 @@ const init = () => {
       const customNotification = new Notification(title, options);
 
       // TODO: Handle a click on the notification to open a new page
-      customNotification.addEventListener('click', redirectHandler(REDIRECT_URL));
+      customNotification.addEventListener(
+        'click',
+        redirectHandler(REDIRECT_URL),
+      );
     }
   });
 };

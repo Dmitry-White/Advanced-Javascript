@@ -26,8 +26,8 @@ const blank = () => {
 
 const anim = () => {
   // While the object is still within the canvas, move it by a small amount
-  if (direction > 0 && (rectX + RECTANGLE_SIDE) < canvasWidth) {
-    if ((rectX + RECTANGLE_SIDE + direction) >= canvasWidth) {
+  if (direction > 0 && rectX + RECTANGLE_SIDE < canvasWidth) {
+    if (rectX + RECTANGLE_SIDE + direction >= canvasWidth) {
       direction = -direction;
     } else {
       rectX += direction;

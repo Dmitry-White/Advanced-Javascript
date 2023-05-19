@@ -23,7 +23,9 @@ const updateVisibility = () => {
     div.innerHTML += `<p>Visibility state: ${document.visibilityState}</p>`;
   };
 
-  document.addEventListener('visibilitychange', () => outputVisibility(outputDiv));
+  document.addEventListener('visibilitychange', () =>
+    outputVisibility(outputDiv),
+  );
 
   outputVisibility(outputDiv);
 };

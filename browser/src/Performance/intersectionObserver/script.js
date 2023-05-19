@@ -4,8 +4,8 @@ const observerConfig = {
 
 const observerHandler = (entries) => {
   const isLessThanHalfVisible = entries[0].intersectionRatio < 0.5;
-  const isHalfAndMoreVisible = entries[0].intersectionRatio >= 0.5
-    && entries[0].intersectionRatio < 1;
+  const isHalfAndMoreVisible =
+    entries[0].intersectionRatio >= 0.5 && entries[0].intersectionRatio < 1;
   const isFullyVisible = entries[0].intersectionRatio >= 1;
 
   if (isLessThanHalfVisible) {

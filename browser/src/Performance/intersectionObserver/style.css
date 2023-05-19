@@ -9,22 +9,22 @@ p {
   line-height: 1.2em;
   padding-top: 4pt;
   border: 1px gray solid;
-  font-size: 24pt
+  font-size: 24pt;
 }
 
 .background0 {
-  background-color: rgba(0, 0, 255, 0)
+  background-color: rgba(0, 0, 255, 0);
 }
 
 .background50 {
-  background-color: rgba(0, 0, 255, 0.5)
+  background-color: rgba(0, 0, 255, 0.5);
 }
 
 .background100 {
-  background-color: rgba(0, 0, 255, 1.0)
+  background-color: rgba(0, 0, 255, 1);
 }
 
-p[class="lorem"] {
+p[class='lorem'] {
   color: rgb(50, 50, 50);
   max-width: 800px;
 }

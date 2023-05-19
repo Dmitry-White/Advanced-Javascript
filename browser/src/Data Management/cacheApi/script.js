@@ -12,23 +12,21 @@ const init = () => {
         const responseClone = res.clone();
 
         cache.put(url, res);
-        responseClone.text()
-          .then((data) => console.log('Network hit: ', data));
+        responseClone.text().then((data) => console.log('Network hit: ', data));
       });
     } else {
       console.log('Found in cache: ', url);
 
-      result.text()
-        .then((data) => console.log('Cache hit: ', data));
+      result.text().then((data) => console.log('Cache hit: ', data));
     }
   };
 
   const getJSONData = (url, cacheName) => {
     if ('caches' in window) {
-      caches.open(cacheName)
-        .then(
-          (cache) => cache.match(url)
-            .then((res) => cacheHandler(cache, res, url)),
+      caches
+        .open(cacheName)
+        .then((cache) =>
+          cache.match(url).then((res) => cacheHandler(cache, res, url)),
         );
     } else {
       console.log('Cache API is not available');
@@ -37,7 +35,8 @@ const init = () => {
 
   const clearCachedData = (cacheName) => {
     if ('caches' in window) {
-      caches.delete(cacheName)
+      caches
+        .delete(cacheName)
         .then((res) => console.log(res ? 'Cache Deleted' : 'Error'));
     } else {
       console.log('Cache API is not available');

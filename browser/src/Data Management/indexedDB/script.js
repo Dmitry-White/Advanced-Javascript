@@ -10,8 +10,12 @@ const init = () => {
   let instance1;
   let instance2;
 
-  const iterateListHandler = (value, key, index) => console.log(index, [key, value]);
-  const loggingHandler = (str) => (val = '') => console.log(`${str}: ${val}`);
+  const iterateListHandler = (value, key, index) =>
+    console.log(index, [key, value]);
+  const loggingHandler =
+    (str) =>
+    (val = '') =>
+      console.log(`${str}: ${val}`);
 
   // set up event handlers
   buttonSet.addEventListener('click', () => {
@@ -20,8 +24,7 @@ const init = () => {
 
     // TODO: Store the data locally
     // eslint-disable-next-line
-    localforage.setItem(key, val)
-      .then(loggingHandler('SetItem stored'));
+    localforage.setItem(key, val).then(loggingHandler('SetItem stored'));
   });
 
   buttonGet.addEventListener('click', () => {
@@ -29,8 +32,7 @@ const init = () => {
 
     // TODO: Retrieve the data
     // eslint-disable-next-line
-    localforage.getItem(key)
-      .then(loggingHandler('GetItem retrieved'));
+    localforage.getItem(key).then(loggingHandler('GetItem retrieved'));
   });
 
   buttonDelete.addEventListener('click', () => {
@@ -38,14 +40,14 @@ const init = () => {
 
     // TODO: Delete the stored key
     // eslint-disable-next-line
-    localforage.removeItem(key)
-      .then(loggingHandler('RemoveItem removed'));
+    localforage.removeItem(key).then(loggingHandler('RemoveItem removed'));
   });
 
   buttonList.addEventListener('click', () => {
     // TODO: Use iterate to list all the stored data
     // eslint-disable-next-line
-    localforage.iterate(iterateListHandler)
+    localforage
+      .iterate(iterateListHandler)
       .then(loggingHandler('Itereation complete'));
   });
 

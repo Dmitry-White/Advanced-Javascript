@@ -8,7 +8,7 @@ dialog {
 }
 
 /* Style the dialog content */
-dialog>h1 {
+dialog > h1 {
   text-align: center;
   background-color: darkblue;
   color: white;
@@ -20,7 +20,7 @@ dialog>h1 {
   font-size: 14pt;
 }
 
-dialog>#dlgcontent {
+dialog > #dlgcontent {
   margin: 5pt;
 }
 
@@ -33,6 +33,6 @@ form {
   padding: 10pt;
 }
 
-form>div {
+form > div {
   margin-bottom: 5pt;
 }
