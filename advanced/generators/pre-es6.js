@@ -1,6 +1,6 @@
 // --------------- ES6 Generator ---------------
 
-function* foo_es6(url) {
+function* generateDataES6(url) {
   // STATE 1
   // Initial state
   try {
@@ -11,25 +11,26 @@ function* foo_es6(url) {
     // Success state
     const value = yield tmp1;
     console.log('Value: ', value);
+    return null;
   } catch (error) {
     // STATE 3
     // Failure state
     console.log('Oops: ', error);
-    return false;
+    return error;
   }
 }
 
 console.log('-------- ES6 Generator ---------');
-const it_es6 = foo_es6('https://jsonplaceholder.typicode.com/todos');
-const value_es6 = it_es6.next();
-console.log('Final: ', it_es6.next(value_es6));
+const itES6 = generateDataES6('https://jsonplaceholder.typicode.com/todos');
+const valueES6 = itES6.next();
+console.log('Final: ', itES6.next(valueES6));
 console.log('--------------------------------');
 // ---------------------------------------------
 
 // ------------ Pre-ES6 Generator --------------
 
 // Function needs to return a generator
-function foo_pre(url) {
+function generateDataPre(url) {
   // Generator state
   let state;
 
@@ -49,13 +50,18 @@ function foo_pre(url) {
         // Success state
         sharedValue = value;
         console.log('Value: ', sharedValue);
-        return;
+        return null;
       case 3:
         // STATE 3
         // Failure state
-        var error = value;
+        var error = value; // eslint-disable-line
         console.log('Oops: ', error);
-        return false;
+        return error;
+      default:
+        // STATE DEFAULT
+        // Failure state
+        console.log('Default: ', null);
+        return null;
     }
   }
 
@@ -84,7 +90,7 @@ function foo_pre(url) {
       // Generator completed
       return {
         done: true,
-        value: undefined,
+        value: null,
       };
     },
     throw(error) {
@@ -105,8 +111,8 @@ function foo_pre(url) {
 }
 
 console.log('------- Pre-ES6 Generator ------');
-const it_pre = foo_pre('https://jsonplaceholder.typicode.com/todos');
-const value_pre = it_pre.next();
-console.log('Final: ', it_pre.next(value_pre));
+const itPre = generateDataPre('https://jsonplaceholder.typicode.com/todos');
+const valuePre = itPre.next();
+console.log('Final: ', itPre.next(valuePre));
 console.log('--------------------------------');
 // ---------------------------------------------

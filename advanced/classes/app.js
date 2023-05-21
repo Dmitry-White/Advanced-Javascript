@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 const mixin = {
   madeIn() {
     return 'This car was made in year 2019.';
@@ -10,8 +11,6 @@ const carMixin = {
     return super.madeIn();
   },
 };
-
-sayHi();
 
 class Car {
   constructor(doors, engine, color) {
@@ -60,7 +59,3 @@ console.log(civic);
 console.log(civic.carStats());
 
 console.log(Car.totalDoors(cx5, civic));
-
-function sayHi() {
-  console.log('Hello, this function can be called anywhere!');
-}

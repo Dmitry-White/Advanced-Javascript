@@ -27,4 +27,10 @@ const screamWarrior = () => {
   });
 };
 
+sayHi(); // eslint-disable-line
+
+function sayHi() {
+  console.log('Hello, this function can be called anywhere!');
+}
+
 screamWarrior();
