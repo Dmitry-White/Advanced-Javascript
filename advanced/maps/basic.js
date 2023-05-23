@@ -1,4 +1,8 @@
-// Maps: Challenge
+/*
+  The Map object holds key-value pairs and remembers the original insertion order of the keys.
+  Any value (both objects and primitive values) may be used as either a key or a value.
+  A key in the Map may only occur once;
+*/
 
 // Below is a list of Oscar-winning Best Pictures from the last several years.
 // 2020 - "Parasite"
