@@ -18,7 +18,11 @@
 
    [The Dangers of Square Bracket Notation 2](https://www.barrage.net/blog/technology/the-dangers-of-square-bracket-notation)
 
-8. [JavaScript: Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
+8. [JavaScript Iterators and Iterables](https://exploringjs.com/impatient-js/ch_sync-iteration.html)
+
+   [JS: Synchronous iteration](https://exploringjs.com/impatient-js/ch_sync-iteration.html)
+
+9. [JavaScript: Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
 
    [JavaScript Reflection](https://www.javascripttutorial.net/es6/javascript-reflection/)
 
@@ -26,7 +30,7 @@
 
    [Proxy and Reflect](https://javascript.info/proxy)
 
-9. [JavaScript: Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+10. [JavaScript: Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 
    [JavaScript Proxy](https://www.javascripttutorial.net/es6/javascript-proxy/)
 
