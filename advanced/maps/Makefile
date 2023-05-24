@@ -5,3 +5,6 @@ basic:
 
 weak:
 	node weak.js
+
+differences:
+	node differences.js
