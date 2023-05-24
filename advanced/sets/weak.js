@@ -25,9 +25,22 @@ const resThree = { id: 9012 };
 const resFour = { id: 3456 };
 
 // Create a new WeakSet and add the above values to your newly created WeakSet.
+const responses = new WeakSet();
+responses.add(resOne);
+responses.add(resTwo);
+responses.add(resThree);
+responses.add(resFour);
+console.log('Responses: ', responses);
 
 // Does your WeakSet have any responses tied to the {id: 9012}?
+console.log(`Has response with ID ${resThree.id}: ${responses.has(resThree)}`);
 
 // Does your WeakSet have any responses tied to the {id: 0123}?
+const newResponse = { id: 123 };
+console.log(
+  `Has response with ID ${newResponse.id}: ${responses.has(newResponse)}`,
+);
 
 // We need to delete resThree from the WeakSet.
+responses.delete(resThree);
+console.log('No Response 3 responses: ', responses);
