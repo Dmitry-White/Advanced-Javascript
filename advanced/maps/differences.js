@@ -26,8 +26,9 @@ console.log('// ====================== Object ==========================');
 (() => {
   // Creation
   const o = {};
-  // OR
+  // OR if you want to avoid Prototype Pollution/Garbage
   const empty = Object.create(null);
+  console.log('Creation: ', o);
 
   // Single Value Update
   o.key = 1;
@@ -38,9 +39,9 @@ console.log('// ====================== Object ==========================');
 
   // Bulk Value Update
   for (const k in o) o[k] += 1;
+  // OR if you want to avoid Prototype Pollution/Garbage
   for (const k in empty) empty[k] += 1;
-  console.log('Bulk Value Update, with Prototype Pollution: ', o);
-  console.log('Bulk Value Update, no Prototype Pollution: ', empty);
+  console.log('Bulk Value Update: ', o);
 
   // Value Sum
   let sum = 0;
@@ -48,9 +49,9 @@ console.log('// ====================== Object ==========================');
   console.log('Value Sum: ', sum);
 
   // Existance
-  console.log('Existance 1: ', 'key' in o);
-  // OR
-  console.log('Existance 2: ', o.hasOwnProperty('key'));
+  console.log('Existance: ', 'key' in o);
+  // OR if you want to avoid Prototype Pollution/Garbage
+  console.log('Existance, no Prototype Garbage: ', o.hasOwnProperty('key'));
 
   // Removal
   delete o.key;
@@ -65,6 +66,7 @@ console.log('// ======================== Map ===========================');
 (() => {
   // Creation
   const m = new Map();
+  console.log('Creation: ', m);
 
   // Single Value Update
   m.set('key', 1);
@@ -72,7 +74,7 @@ console.log('// ======================== Map ===========================');
   console.log('Single Value Update: ', m);
 
   // Bulk Value Update
-  m.forEach((k) => m.set(k, m.get(k) + 1));
+  m.forEach((v, k) => m.set(k, m.get(k) + 1));
   // OR
   for (const k of m.keys()) m.set(k, m.get(k) + 1);
   console.log('Bulk Value Update: ', m);
