@@ -8,3 +8,6 @@ weak:
 
 differences:
 	node differences.js
+
+json:
+	node json.js
