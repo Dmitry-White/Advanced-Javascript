@@ -1,4 +1,4 @@
-.PHONY: basic, weak
+.PHONY: basic, weak, differences, json
 
 basic:
 	node basic.js
