@@ -1,4 +1,6 @@
-(function () {
+/* global env */
+
+((env) => {
   const apiUrl = env.API_URL;
   const apiKey = env.API_KEY;
   const apiErrorMessage = 'Weather information unavailable';
@@ -57,6 +59,17 @@
   const forecastButton = document.querySelector('.forecast-button');
   const resultsBlock = document.querySelector('.results');
 
+  function updateState(type) {
+    if (currentCategory === CATEGORIES.SOLO) {
+      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+    } else if (currentCategory === CATEGORIES.TEAM) {
+      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+    } else {
+      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
+      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
+    }
+  }
+
   function getSearchUrl(location) {
     const cityQuery = `${apiCityParameter}${location}`;
     const searchUrl = `${apiUrl}${apiDataCollection}?${cityQuery}&${apiAuthorization}`;
@@ -74,50 +87,6 @@
 
   function getFahrenheit(tempKelvin) {
     return getCelcius(tempKelvin) * 1.8 + 32;
-  }
-
-  forecastButton.addEventListener(
-    'click',
-    (e) => {
-      e.preventDefault();
-      const location = locationBlock.value;
-      const searchUrl = getSearchUrl(location);
-
-      fetch(searchUrl)
-        .then((res) => res.json())
-        .then((response) => updateUISuccess(response))
-        .catch(() => updateUIFailure());
-
-      locationBlock.value = '';
-    },
-    false,
-  );
-
-  optionsBlock.forEach((el) =>
-    el.addEventListener('click', updateActivityList, false),
-  );
-
-  function updateUISuccess(response) {
-    const {
-      main: { temp },
-      weather,
-      name,
-    } = response;
-    const { main, icon } = weather[0];
-
-    const tempCelcius = getCelcius(temp);
-    const tempFahrenheit = getFahrenheit(temp);
-
-    state = {
-      condition: main,
-      icon: getIconUrl(icon),
-      celcius: Math.floor(tempCelcius),
-      fahrenheit: Math.floor(tempFahrenheit),
-      city: name,
-    };
-
-    drawForecast();
-    updateActivityList();
   }
 
   function drawForecast() {
@@ -176,7 +145,7 @@
     state.activities = [];
 
     if (event !== undefined && event.target.classList.contains('selected')) {
-      return true;
+      return;
     }
     if (event !== undefined && !event.target.classList.contains('selected')) {
       currentCategory = event.target.id;
@@ -199,18 +168,51 @@
     resultsBlock.classList.add('open');
   }
 
-  function updateState(type) {
-    if (currentCategory === CATEGORIES.SOLO) {
-      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-    } else if (currentCategory === CATEGORIES.TEAM) {
-      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-    } else {
-      state.activities.push(...ACTIVITIES[CATEGORIES.SOLO + type]);
-      state.activities.push(...ACTIVITIES[CATEGORIES.TEAM + type]);
-    }
+  function updateUISuccess(response) {
+    const {
+      main: { temp },
+      weather,
+      name,
+    } = response;
+    const { main, icon } = weather[0];
+
+    const tempCelcius = getCelcius(temp);
+    const tempFahrenheit = getFahrenheit(temp);
+
+    state = {
+      condition: main,
+      icon: getIconUrl(icon),
+      celcius: Math.floor(tempCelcius),
+      fahrenheit: Math.floor(tempFahrenheit),
+      city: name,
+    };
+
+    drawForecast();
+    updateActivityList();
   }
 
   function updateUIFailure() {
     conditionsBlock.textContent = apiErrorMessage;
   }
-})();
+
+  forecastButton.addEventListener(
+    'click',
+    (e) => {
+      e.preventDefault();
+      const location = locationBlock.value;
+      const searchUrl = getSearchUrl(location);
+
+      fetch(searchUrl)
+        .then((res) => res.json())
+        .then((response) => updateUISuccess(response))
+        .catch(() => updateUIFailure());
+
+      locationBlock.value = '';
+    },
+    false,
+  );
+
+  optionsBlock.forEach((el) =>
+    el.addEventListener('click', updateActivityList, false),
+  );
+})(env);
