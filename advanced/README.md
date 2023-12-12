@@ -32,10 +32,10 @@
 
 10. [JavaScript: Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 
-   [JavaScript Proxy](https://www.javascripttutorial.net/es6/javascript-proxy/)
+[JavaScript Proxy](https://www.javascripttutorial.net/es6/javascript-proxy/)
 
-   [How JavaScript's Proxy Object Works](https://www.freecodecamp.org/news/javascript-proxy-object/)
+[How JavaScript's Proxy Object Works](https://www.freecodecamp.org/news/javascript-proxy-object/)
 
-   [Metaprogramming in JavaScript](https://www.freecodecamp.org/news/what-is-metaprogramming-in-javascript-in-english-please/)
+[Metaprogramming in JavaScript](https://www.freecodecamp.org/news/what-is-metaprogramming-in-javascript-in-english-please/)
 
-   [Proxy and Reflect](https://javascript.info/proxy)
+[Proxy and Reflect](https://javascript.info/proxy)

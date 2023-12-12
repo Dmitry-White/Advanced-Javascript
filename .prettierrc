@@ -1,5 +1,1 @@
-{
-  "semi": true,
-  "trailingComma": "all",
-  "singleQuote": true
-}
+"@dmitrywhite/prettier-config"
